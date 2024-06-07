@@ -1,14 +1,14 @@
 import React from 'react';
 import {Button, Text, View} from 'react-native';
 
-const HomeScreen = ({navigation}) => {
+const JobDetailScreen = ({navigation}) => {
   return (
     <View>
       <Text className="text-2xl font-bold text-center text-blue-500">
-        HomeScreen
+        JobDetailScreen
       </Text>
     </View>
   );
 };
 
-export default HomeScreen;
+export default JobDetailScreen;

@@ -5,7 +5,10 @@ const LoginScreen: React.FC = ({navigation}) => {
   return (
     <View>
       <Text>LoginScreen</Text>
-      <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
+      <Button
+        title="Go to Register Screen"
+        onPress={() => navigation.navigate('Register')}
+      />
     </View>
   );
 };
