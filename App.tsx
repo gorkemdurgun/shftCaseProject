@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -13,7 +13,6 @@ import ProfileScreen from './screens/Profile';
 import JobListingsScreen from './screens/JobListings';
 import JobDetailScreen from './screens/JobDetail';
 import AppliedJobsScreen from './screens/AppliedJobs';
-import {authServices} from './services/auth';
 
 // import './global.css';
 
@@ -44,18 +43,6 @@ export default function App() {
   const isAuth = false;
 
   const queryClient = new QueryClient();
-
-  useEffect(() => {
-    console.log('App mounted');
-    authServices
-      .login('', '')
-      .then(data => {
-        console.log(data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>

@@ -1,14 +1,8 @@
-import apiAxios from '../../utils/apiAxios';
+import apiAxios from '../../api/apiAxios';
 
-const testData = {
-  email: 'test@test.com',
-  password: 'password',
-};
-
-export const login = async (email: string, password: string) => {
-  const response = await apiAxios.post('/login', {
-    email: testData.email,
-    password: testData.password,
-  });
+export const login = async (
+  credentials: LoginRequest,
+): Promise<LoginResponse> => {
+  const response = await apiAxios.post('/login', credentials);
   return response.data;
 };
