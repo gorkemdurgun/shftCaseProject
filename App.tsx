@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
 import LoginScreen from './screens/Login';
 import RegisterScreen from './screens/Register';
@@ -11,6 +13,7 @@ import ProfileScreen from './screens/Profile';
 import JobListingsScreen from './screens/JobListings';
 import JobDetailScreen from './screens/JobDetail';
 import AppliedJobsScreen from './screens/AppliedJobs';
+import {authServices} from './services/auth';
 
 // import './global.css';
 
@@ -40,9 +43,25 @@ export default function App() {
 
   const isAuth = false;
 
+  const queryClient = new QueryClient();
+
+  useEffect(() => {
+    console.log('App mounted');
+    authServices
+      .login('', '')
+      .then(data => {
+        console.log(data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, []);
+
   return (
-    <NavigationContainer>
-      {isAuth ? <MainTabScreens /> : <AuthStackScreens />}
-    </NavigationContainer>
+    <QueryClientProvider client={queryClient}>
+      <NavigationContainer>
+        {isAuth ? <MainTabScreens /> : <AuthStackScreens />}
+      </NavigationContainer>
+    </QueryClientProvider>
   );
 }
