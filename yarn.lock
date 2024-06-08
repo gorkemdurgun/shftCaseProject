@@ -8672,6 +8672,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-snackbar@npm:^2.6.2":
+  version: 2.7.1
+  resolution: "react-native-snackbar@npm:2.7.1"
+  peerDependencies:
+    react: ">=16"
+    react-native: ">=0.60"
+  checksum: f2bbc23c779ef73bc8e9e0491278ab00ebf3c434c332093f1ea70ee8e0e4e410a987d0eb13a69ef608023a52d99c089d79aaef365fe60f2baa5726bea367d76d
+  languageName: node
+  linkType: hard
+
 "react-native@npm:0.74.2":
   version: 0.74.2
   resolution: "react-native@npm:0.74.2"
@@ -9381,6 +9391,7 @@ __metadata:
     react-native-gesture-handler: ^2.16.2
     react-native-safe-area-context: ^4.10.4
     react-native-screens: ^3.31.1
+    react-native-snackbar: ^2.6.2
     react-redux: ^9.1.2
     react-test-renderer: 18.2.0
     redux-persist: ^6.0.0

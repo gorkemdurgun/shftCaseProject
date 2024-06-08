@@ -11,6 +11,7 @@ import {useMutation} from '@tanstack/react-query';
 import {useDispatch} from 'react-redux';
 import {setUser} from '../redux/slices/userSlice';
 import colors from 'tailwindcss/colors';
+import Snackbar from 'react-native-snackbar';
 
 const LoginScreen: React.FC = ({navigation}) => {
   const dispatch = useDispatch();
@@ -37,7 +38,12 @@ const LoginScreen: React.FC = ({navigation}) => {
       );
     },
     onError: error => {
-      console.log(error);
+      Snackbar.show({
+        text: error.message,
+        duration: 3000,
+        backgroundColor: colors.red[500],
+        textColor: colors.white,
+      });
     },
   });
 
@@ -77,14 +83,6 @@ const LoginScreen: React.FC = ({navigation}) => {
             onChangeText={text => setLoginForm({...loginForm, password: text})}
           />
         </View>
-        {isError && (
-          <View
-            className={`w-full flex justify-start items-start bg-red-100 p-2 my-2 rounded-md`}>
-            <Text className="text-sm text-red-900">
-              Invalid email or password
-            </Text>
-          </View>
-        )}
         <TouchableOpacity
           disabled={isPending}
           className="w-full flex justify-center items-center p-2 shadow-md rounded-md"
