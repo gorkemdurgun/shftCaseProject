@@ -148,10 +148,10 @@ function MainTabNavigator() {
 
 export default function App() {
   function AppNavigator() {
-    const token = useSelector(state => state.user);
+    const token = useSelector(state => state.user.token);
 
     useEffect(() => {
-      console.log(token);
+      console.log('active access token', token);
     }, [token]);
 
     return (

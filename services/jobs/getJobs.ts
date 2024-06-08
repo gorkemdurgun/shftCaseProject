@@ -1,11 +1,26 @@
 import apiAxios from '../../api/apiAxios';
 
-export const getJobs = async (): Promise<any> => {
+export const getJobs = async ({
+  page,
+  perPage,
+  orderByField,
+  orderByDirection,
+  searchField,
+  searchQuery,
+}: GetJobsRequest): Promise<GetJobsResponse> => {
   try {
-    const {data} = await apiAxios.post<any>('/jobs');
-    return data;
+    const {data: response} = await apiAxios.get<GetJobsResponse>('/jobs', {
+      params: {
+        page,
+        perPage,
+        orderByField,
+        orderByDirection,
+        searchField,
+        searchQuery,
+      },
+    });
+    return response;
   } catch (error: Error | any) {
-    console.log('error', error);
     const toError = new Error(error.response.data.message);
     throw toError;
   }
