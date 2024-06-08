@@ -29,6 +29,7 @@ const LoginScreen: React.FC = ({navigation}: any) => {
   } = useMutation({
     mutationFn: authServices.login,
     onSuccess: data => {
+      // console.log(data.accessToken);
       dispatch(
         setUser({
           user: data.user,
