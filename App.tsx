@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -13,42 +13,58 @@ import ProfileScreen from './screens/Profile';
 import JobListingsScreen from './screens/JobListings';
 import JobDetailScreen from './screens/JobDetail';
 import AppliedJobsScreen from './screens/AppliedJobs';
+import {Provider as ReduxProvider, useDispatch, useSelector} from 'react-redux';
+import store, {persistor} from './redux/store';
+import SplashScreen from './screens/Splash';
+import {PersistGate} from 'redux-persist/integration/react';
 
 // import './global.css';
 
-const AuthStack = createNativeStackNavigator();
-const MainTab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+function MainTabNavigator() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name="JobListings" component={JobListingsScreen} />
+      <Tab.Screen name="JobDetail" component={JobDetailScreen} />
+      <Tab.Screen name="AppliedJobs" component={AppliedJobsScreen} />
+    </Tab.Navigator>
+  );
+}
 
 export default function App() {
-  function AuthStackScreens() {
+  function AppNavigator() {
+    const token = useSelector(state => state.user);
+
+    useEffect(() => {
+      console.log(token);
+    }, [token]);
+
     return (
-      <AuthStack.Navigator>
-        <AuthStack.Screen name="Login" component={LoginScreen} />
-        <AuthStack.Screen name="Register" component={RegisterScreen} />
-      </AuthStack.Navigator>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{headerShown: false}}
+          initialRouteName="Splash">
+          <Stack.Screen name="Splash" component={SplashScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen name="Main" component={MainTabNavigator} />
+        </Stack.Navigator>
+      </NavigationContainer>
     );
   }
-  function MainTabScreens() {
-    return (
-      <MainTab.Navigator>
-        <MainTab.Screen name="Home" component={HomeScreen} />
-        <MainTab.Screen name="Profile" component={ProfileScreen} />
-        <MainTab.Screen name="JobListings" component={JobListingsScreen} />
-        <MainTab.Screen name="JobDetail" component={JobDetailScreen} />
-        <MainTab.Screen name="AppliedJobs" component={AppliedJobsScreen} />
-      </MainTab.Navigator>
-    );
-  }
-
-  const isAuth = false;
-
   const queryClient = new QueryClient();
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <NavigationContainer>
-        {isAuth ? <MainTabScreens /> : <AuthStackScreens />}
-      </NavigationContainer>
-    </QueryClientProvider>
+    <ReduxProvider store={store}>
+      <PersistGate persistor={persistor} loading={null}>
+        <QueryClientProvider client={queryClient}>
+          <AppNavigator />
+        </QueryClientProvider>
+      </PersistGate>
+    </ReduxProvider>
   );
 }
