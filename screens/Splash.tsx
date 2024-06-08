@@ -9,7 +9,7 @@ const SplashScreen: React.FC<{navigation: any}> = ({navigation}) => {
   useEffect(() => {
     setTimeout(() => {
       if (token) {
-        navigation.navigate('Main', {screen: 'Home'});
+        navigation.navigate('Main', {screen: 'JobListings'});
       } else {
         navigation.navigate('Login');
       }
