@@ -5,6 +5,8 @@ const apiAxios = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 10000,
+  timeoutErrorMessage: 'Request cancelled due to timeout',
 });
 
 export default apiAxios;

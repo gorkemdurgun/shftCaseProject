@@ -113,11 +113,35 @@ function MainTabNavigator() {
 
   return (
     <Tab.Navigator
-      screenOptions={{headerShown: false}}
+      screenOptions={{
+        headerShown: true,
+      }}
       tabBar={props => <MyTabBar {...props} />}>
-      <Tab.Screen name="JobListings" component={JobListingsScreen} />
-      <Tab.Screen name="AppliedJobs" component={AppliedJobsScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen
+        name="JobListings"
+        component={JobListingsScreen}
+        options={{
+          headerLeft(props) {
+            return (
+              <View>
+                <TouchableOpacity className="ml-4" onPress={() => {}}>
+                  <Icon
+                    name="right-from-bracket"
+                    size={16}
+                    style={{transform: [{rotate: '180deg'}]}}
+                  />
+                </TouchableOpacity>
+              </View>
+            );
+          },
+        }}
+      />
+      <Tab.Screen
+        name="AppliedJobs"
+        component={AppliedJobsScreen}
+        options={{}}
+      />
+      <Tab.Screen name="Profile" component={ProfileScreen} options={{}} />
     </Tab.Navigator>
   );
 }

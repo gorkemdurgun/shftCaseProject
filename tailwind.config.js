@@ -1,3 +1,5 @@
+const {indigo} = require('tailwindcss/colors');
+
 module.exports = {
   content: [
     './App.{js,jsx,ts,tsx}',
@@ -7,6 +9,8 @@ module.exports = {
   theme: {
     extend: {},
     colors: {
+      white: '#FFFFFF',
+      black: '#000000',
       blue: {
         100: '#C3DAFE',
         200: '#A3BFFA',
@@ -50,6 +54,17 @@ module.exports = {
         700: '#9B2C2C',
         800: '#822727',
         900: '#63171B',
+      },
+      indigo: {
+        100: '#D6E4FF',
+        200: '#ADC6FF',
+        300: '#85A8FF',
+        400: '#669EFF',
+        500: '#3F83F8',
+        600: '#2D60F5',
+        700: '#1E3A8A',
+        800: '#10216B',
+        900: '#091C4C',
       },
     },
   },

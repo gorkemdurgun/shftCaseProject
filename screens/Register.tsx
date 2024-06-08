@@ -89,7 +89,7 @@ const RegisterScreen: React.FC = ({navigation}: any) => {
           className="w-full flex justify-center items-center p-2 shadow-md rounded-md"
           style={{
             marginTop: 8,
-            backgroundColor: colors.indigo[800],
+            backgroundColor: colors.indigo[300],
           }}
           onPress={() => registerMutation(registerForm)}>
           {isPending ? (
@@ -100,7 +100,7 @@ const RegisterScreen: React.FC = ({navigation}: any) => {
               animating={true}
             />
           ) : (
-            <Text className="text-lg text-white">Sign Up</Text>
+            <Text className="text-lg text-indigo-700">Sign Up</Text>
           )}
         </TouchableOpacity>
       </View>

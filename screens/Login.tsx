@@ -93,13 +93,13 @@ const LoginScreen: React.FC = ({navigation}: any) => {
               animating={true}
             />
           ) : (
-            <Text className="text-lg text-white">Login</Text>
+            <Text className="text-lg text-indigo-100">Login</Text>
           )}
         </TouchableOpacity>
       </View>
       {/* Register Section */}
       <View className="w-full flex justify-center items-center">
-        <Text className="text-indigo-900">Don't have an account?</Text>
+        <Text className="text-md text-indigo-900">Don't have an account?</Text>
         <TouchableOpacity
           className="w-full flex justify-center items-center p-2 shadow-lg rounded-lg"
           style={{
@@ -107,7 +107,7 @@ const LoginScreen: React.FC = ({navigation}: any) => {
             backgroundColor: colors.indigo[300],
           }}
           onPress={() => navigation.navigate('Register')}>
-          <Text className="text-lg text-indigo-900">Register</Text>
+          <Text className="text-lg text-indigo-700">Register</Text>
         </TouchableOpacity>
       </View>
     </View>
