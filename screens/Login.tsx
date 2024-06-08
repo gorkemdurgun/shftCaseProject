@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {
   ActivityIndicator,
   Text,
@@ -13,7 +13,7 @@ import {setUser} from '../redux/slices/userSlice';
 import colors from 'tailwindcss/colors';
 import Snackbar from 'react-native-snackbar';
 
-const LoginScreen: React.FC = ({navigation}) => {
+const LoginScreen: React.FC = ({navigation}: any) => {
   const dispatch = useDispatch();
 
   const [loginForm, setLoginForm] = React.useState<LoginRequest>({
@@ -29,7 +29,6 @@ const LoginScreen: React.FC = ({navigation}) => {
   } = useMutation({
     mutationFn: authServices.login,
     onSuccess: data => {
-      console.log(data.accessToken);
       dispatch(
         setUser({
           user: data.user,
@@ -47,11 +46,6 @@ const LoginScreen: React.FC = ({navigation}) => {
     },
   });
 
-  function handleLogin() {
-    // setLoading(true);
-    loginMutation(loginForm);
-  }
-
   return (
     <View className="flex-1 justify-center items-start p-4 bg-gray-300">
       {/* Welcome Text */}
@@ -61,7 +55,7 @@ const LoginScreen: React.FC = ({navigation}) => {
       </View>
       {/* Login Form */}
       <View className="w-full flex justify-center items-center mb-12">
-        <View className="w-full flex justify-start items-start gap-y-1 mb-2">
+        <View className="w-full flex justify-start items-start gap-y-1 mb-4">
           <Text className="text-black font-semibold">Email</Text>
           <TextInput
             keyboardType="email-address"
@@ -72,7 +66,7 @@ const LoginScreen: React.FC = ({navigation}) => {
             onChangeText={text => setLoginForm({...loginForm, email: text})}
           />
         </View>
-        <View className="w-full flex justify-start items-start gap-y-1 mb-2">
+        <View className="w-full flex justify-start items-start gap-y-1 mb-4">
           <Text className="text-black font-semibold">Password</Text>
           <TextInput
             keyboardType="visible-password"
@@ -90,7 +84,7 @@ const LoginScreen: React.FC = ({navigation}) => {
             marginTop: 8,
             backgroundColor: colors.indigo[800],
           }}
-          onPress={handleLogin}>
+          onPress={() => loginMutation(loginForm)}>
           {isPending ? (
             <ActivityIndicator
               color={colors.white}

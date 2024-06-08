@@ -3,6 +3,14 @@ import apiAxios from '../../api/apiAxios';
 export const register = async (
   credentials: RegisterRequest,
 ): Promise<RegisterResponse> => {
-  const response = await apiAxios.post('/register', credentials);
-  return response.data;
+  try {
+    const {data} = await apiAxios.post<RegisterResponse>(
+      '/register',
+      credentials,
+    );
+    return data;
+  } catch (error: Error | any) {
+    const toError = new Error(error.response.data.message);
+    throw toError;
+  }
 };
