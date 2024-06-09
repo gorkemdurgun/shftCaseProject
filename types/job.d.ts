@@ -18,8 +18,8 @@ type JobListMeta = {
 type GetJobsRequest = {
   page?: number;
   perPage?: number;
-  orderByField?: string;
-  orderByDirection?: string;
+  orderByField?: 'createdAt' | 'salary';
+  orderByDirection?: 'asc' | 'desc';
   searchField?: string;
   searchQuery?: string;
 };

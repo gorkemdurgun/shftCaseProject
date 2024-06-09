@@ -11,8 +11,14 @@ import colors from 'tailwindcss/colors';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {useMutation} from '@tanstack/react-query';
 import {jobsServices} from '../services/jobs';
+import {useSelector} from 'react-redux';
+import {RootState} from '../redux/store';
 
 const JobListingsScreen = ({navigation}: any) => {
+  const appliedJobs = useSelector(
+    (state: RootState) => state.user.user?.appliedJobs,
+  );
+
   const [search, setSearch] = React.useState('');
   const [jobs, setJobs] = React.useState<Job[]>([]);
   const [jobListMeta, setJobListMeta] = React.useState<JobListMeta>({
@@ -91,17 +97,22 @@ const JobListingsScreen = ({navigation}: any) => {
           );
         }}
         renderItem={({item}) => (
-          <View className="flex flex-row items-center gap-x-2 p-2 my-[6px] ml-0 bg-white border rounded-lg">
-            <Icon name="briefcase" size={20} color={colors.indigo[700]} />
-            <View>
+          <TouchableOpacity
+            className="flex flex-row items-center p-4 my-[6px] ml-0 bg-white rounded-lg"
+            // onPress={() => navigation.navigate('JobDetail', {job: item})}
+          >
+            <Icon name="briefcase" size={28} color={colors.gray[700]} />
+            <View className="ml-4">
               <Text className="text-md font-semibold">{item.name}</Text>
               <Text className="text-sm text-gray-500">{item.companyName}</Text>
               <Text className="text-sm text-gray-500">{item.salary}$</Text>
             </View>
-            <TouchableOpacity className="flex-1 items-end mb-8">
-              <Icon name="check-circle" size={20} color={colors.indigo[700]} />
-            </TouchableOpacity>
-          </View>
+            {appliedJobs?.includes(item.id) ? (
+              <View className="flex-1 flex items-end mb-8">
+                <Icon name="check-circle" size={20} color={colors.green[500]} />
+              </View>
+            ) : null}
+          </TouchableOpacity>
         )}
       />
     </View>
