@@ -55,11 +55,14 @@ function MainTabNavigator() {
   const dispatch = useAppDispatch();
 
   function MyTabBar({state, descriptors, navigation}: any) {
+    const visibleRoutes = state.routes.filter(
+      (route: any) => route.name !== 'JobDetail',
+    );
     return (
       <View
         className="flex flex-row justify-between items-center p-4"
         style={{backgroundColor: colors.indigo[700]}}>
-        {state.routes.map((route: any, index: number) => {
+        {visibleRoutes.map((route: any, index: number) => {
           const {options} = descriptors[route.key];
           const label =
             options.tabBarLabel !== undefined
@@ -100,7 +103,7 @@ function MainTabNavigator() {
               onLongPress={onLongPress}
               className="flex-1 justify-center items-center gap-y-1">
               <Icon
-                name={routes[index].icon}
+                name={routes[index]?.icon}
                 size={20}
                 color={isFocused ? colors.white : colors.indigo[300]}
               />
@@ -108,7 +111,7 @@ function MainTabNavigator() {
                 style={{
                   color: isFocused ? colors.white : colors.indigo[300],
                 }}>
-                {routes[index].title}
+                {routes[index]?.title}
               </Text>
             </TouchableOpacity>
           );
@@ -176,6 +179,22 @@ function MainTabNavigator() {
                 className="mr-4"
                 onPress={() => dispatch(clearUser())}>
                 <Icon name="right-from-bracket" size={16} />
+              </TouchableOpacity>
+            );
+          },
+        }}
+      />
+      <Tab.Screen
+        name="JobDetail"
+        component={JobDetailScreen}
+        options={{
+          tabBarButton: () => null,
+          headerLeft(props) {
+            return (
+              <TouchableOpacity
+                className="ml-4"
+                onPress={() => navigation.navigate('JobListings')}>
+                <Icon name="arrow-left" size={16} />
               </TouchableOpacity>
             );
           },

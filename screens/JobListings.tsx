@@ -47,7 +47,7 @@ const JobListingsScreen = ({navigation}: any) => {
       page: jobListMeta.page,
       perPage: jobListMeta.perPage,
     });
-  }, [getAllJobsMutation, jobListMeta.page, jobListMeta.perPage]);
+  }, []);
 
   return (
     <View className="flex-1 items-center pt-4 px-2 pb-0 bg-gray-300">
@@ -68,21 +68,10 @@ const JobListingsScreen = ({navigation}: any) => {
         </View>
       ) : (
         <FlatList
-          showsVerticalScrollIndicator={false}
           className="w-full"
+          showsVerticalScrollIndicator={false}
           data={jobs}
           keyExtractor={item => item.id}
-          refreshControl={
-            <RefreshControl
-              refreshing={isPending}
-              onRefresh={() =>
-                getAllJobsMutation({
-                  page: jobListMeta.page,
-                  perPage: jobListMeta.perPage,
-                })
-              }
-            />
-          }
           ListFooterComponent={() => {
             return (
               <View className="flex flex-row flex-wrap items-center justify-center gap-x-2 py-2">
@@ -114,8 +103,9 @@ const JobListingsScreen = ({navigation}: any) => {
           renderItem={({item}) => (
             <TouchableOpacity
               className="flex flex-row items-center p-4 my-[6px] ml-0 bg-white rounded-lg"
-              // onPress={() => navigation.navigate('JobDetail', {job: item})}
-            >
+              onPress={() =>
+                navigation.navigate('JobDetail', {jobId: item.id})
+              }>
               <Icon name="briefcase" size={28} color={colors.gray[700]} />
               <View className="ml-4">
                 <Text className="text-md font-semibold">{item.name}</Text>

@@ -1,5 +1,7 @@
 import axios from 'axios';
 import store from '../redux/store';
+import {clearUser} from '../redux/slices/userSlice';
+import Snackbar from 'react-native-snackbar';
 
 const apiAxios = axios.create({
   baseURL: 'https://novel-project-ntj8t.ampt.app/api',
@@ -23,14 +25,17 @@ apiAxios.interceptors.request.use(
   },
 );
 
-// when 401 response, clear user and redirect to login
 apiAxios.interceptors.response.use(
   response => {
     return response;
   },
   error => {
     if (error.response.status === 401) {
-      store.dispatch({type: 'CLEAR_USER'});
+      Snackbar.show({
+        text: 'Unauthorized, please login again',
+        duration: 3000,
+      });
+      store.dispatch(clearUser());
     }
     return Promise.reject(error);
   },

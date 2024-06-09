@@ -57,15 +57,16 @@ const AppliedJobsScreen = ({navigation}: any) => {
         </View>
       ) : (
         <FlatList
-          showsVerticalScrollIndicator={false}
           className="w-full"
+          showsVerticalScrollIndicator={false}
           data={userAppliedJobs}
           keyExtractor={item => item.id}
           renderItem={({item}) => (
             <TouchableOpacity
               className="flex flex-row items-center p-4 my-[6px] ml-0 bg-white rounded-lg"
-              // onPress={() => navigation.navigate('JobDetail', {job: item})}
-            >
+              onPress={() =>
+                navigation.navigate('JobDetail', {jobId: item.id})
+              }>
               <Icon name="briefcase" size={28} color={colors.gray[700]} />
               <View className="ml-4">
                 <Text className="text-md font-semibold">{item.name}</Text>
