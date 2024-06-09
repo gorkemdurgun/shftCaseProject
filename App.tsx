@@ -19,34 +19,39 @@ import {PersistGate} from 'redux-persist/integration/react';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {Text, TouchableOpacity, View} from 'react-native';
 import colors from 'tailwindcss/colors';
+import useAppSelector from './hooks/useAppSelector';
+import useAppDispatch from './hooks/useAppDispatch';
+import {clearUser} from './redux/slices/userSlice';
 
 // import './global.css';
+
+const routes: {
+  route: string;
+  title: string;
+  icon: string;
+}[] = [
+  {
+    route: 'JobListings',
+    title: 'Job Listings',
+    icon: 'list',
+  },
+  {
+    route: 'AppliedJobs',
+    title: 'Applied Jobs',
+    icon: 'list-check',
+  },
+  {
+    route: 'Profile',
+    title: 'Profile',
+    icon: 'user',
+  },
+];
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function MainTabNavigator() {
-  const routes: {
-    route: string;
-    title: string;
-    icon: string;
-  }[] = [
-    {
-      route: 'JobListings',
-      title: 'Job Listings',
-      icon: 'list',
-    },
-    {
-      route: 'AppliedJobs',
-      title: 'Applied Jobs',
-      icon: 'list-check',
-    },
-    {
-      route: 'Profile',
-      title: 'Profile',
-      icon: 'user',
-    },
-  ];
+  const dispatch = useAppDispatch();
 
   function MyTabBar({state, descriptors, navigation}: any) {
     return (
@@ -124,7 +129,9 @@ function MainTabNavigator() {
           headerLeft(props) {
             return (
               <View>
-                <TouchableOpacity className="ml-4" onPress={() => {}}>
+                <TouchableOpacity
+                  className="ml-4"
+                  onPress={() => dispatch(clearUser())}>
                   <Icon
                     name="right-from-bracket"
                     size={16}
@@ -148,7 +155,7 @@ function MainTabNavigator() {
 
 export default function App() {
   function AppNavigator() {
-    const token = useSelector(state => state.user.token);
+    const token = useAppSelector(state => state.user.token);
 
     useEffect(() => {
       console.log('active access token', token);

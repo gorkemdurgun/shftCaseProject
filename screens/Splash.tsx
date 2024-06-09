@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
 import {View, Text, StyleSheet, ActivityIndicator} from 'react-native';
-import {useSelector} from 'react-redux';
-import {RootState} from '../redux/store';
+
+import useAppSelector from '../hooks/useAppSelector';
 
 const SplashScreen: React.FC<{navigation: any}> = ({navigation}) => {
-  const token = useSelector((state: RootState) => state.user.token);
+  const token = useAppSelector(state => state.user.token);
 
   useEffect(() => {
     setTimeout(() => {

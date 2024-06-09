@@ -8,13 +8,13 @@ import {
 } from 'react-native';
 import {authServices} from '../services/auth';
 import {useMutation} from '@tanstack/react-query';
-import {useDispatch} from 'react-redux';
 import {setUser} from '../redux/slices/userSlice';
 import colors from 'tailwindcss/colors';
 import Snackbar from 'react-native-snackbar';
+import useAppDispatch from '../hooks/useAppDispatch';
 
 const LoginScreen: React.FC = ({navigation}: any) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [loginForm, setLoginForm] = React.useState<LoginRequest>({
     email: 'test@test.com',

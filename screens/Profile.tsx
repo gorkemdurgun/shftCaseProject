@@ -1,11 +1,11 @@
 import React from 'react';
 import {Text, View} from 'react-native';
-import {useDispatch} from 'react-redux';
 import {clearUser} from '../redux/slices/userSlice';
 import {TouchableOpacity} from 'react-native';
+import useAppDispatch from '../hooks/useAppDispatch';
 
 const ProfileScreen = ({navigation}: any) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   function handleLogout() {
     dispatch(clearUser());

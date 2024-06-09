@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import {
+  ActivityIndicator,
   Button,
   FlatList,
   Text,
@@ -11,11 +12,12 @@ import colors from 'tailwindcss/colors';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {useMutation} from '@tanstack/react-query';
 import {jobsServices} from '../services/jobs';
-import {useSelector} from 'react-redux';
+
 import {RootState} from '../redux/store';
+import useAppSelector from '../hooks/useAppSelector';
 
 const JobListingsScreen = ({navigation}: any) => {
-  const appliedJobs = useSelector(
+  const appliedJobs = useAppSelector(
     (state: RootState) => state.user.user?.appliedJobs,
   );
 
@@ -24,10 +26,8 @@ const JobListingsScreen = ({navigation}: any) => {
   const [jobListMeta, setJobListMeta] = React.useState<JobListMeta>({
     total: 0,
     page: 1,
-    perPage: 10,
+    perPage: 20,
   });
-  const [page, setPage] = React.useState(1);
-  const [perPage, setPerPage] = React.useState(10);
 
   const {
     mutate: getAllJobsMutation,
@@ -38,24 +38,16 @@ const JobListingsScreen = ({navigation}: any) => {
     onSuccess: ({data, meta}) => {
       setJobs(data);
       setJobListMeta(meta);
-      /*
-      dispatch(
-        setUser({
-          user: data.user,
-          token: data.accessToken,
-        }),
-      );
-      */
     },
     onError: error => {},
   });
 
   useEffect(() => {
     getAllJobsMutation({
-      page: page,
-      perPage: perPage,
+      page: jobListMeta.page,
+      perPage: jobListMeta.perPage,
     });
-  }, [getAllJobsMutation, page, perPage]);
+  }, [getAllJobsMutation, jobListMeta.page, jobListMeta.perPage]);
 
   return (
     <View className="flex-1 items-center pt-4 px-2 pb-0 bg-gray-300">
@@ -70,51 +62,70 @@ const JobListingsScreen = ({navigation}: any) => {
           onChangeText={setSearch}
         />
       </View>
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        className="w-full"
-        data={jobs}
-        keyExtractor={item => item.id}
-        ListFooterComponent={() => {
-          return (
-            <View className="flex flex-row flex-wrap items-center justify-center gap-x-2 py-2">
-              {Array.from({length: jobListMeta?.total / perPage}, (_, i) => (
-                <TouchableOpacity
-                  key={i}
-                  className={`p-2 rounded-lg ${
-                    page === i + 1 ? 'bg-blue-500' : 'bg-white'
-                  }`}
-                  onPress={() => setPage(i + 1)}>
-                  <Text
-                    className={`text-sm font-semibold ${
-                      page === i + 1 ? 'text-white' : 'text-indigo-500'
-                    }`}>
-                    {i + 1}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          );
-        }}
-        renderItem={({item}) => (
-          <TouchableOpacity
-            className="flex flex-row items-center p-4 my-[6px] ml-0 bg-white rounded-lg"
-            // onPress={() => navigation.navigate('JobDetail', {job: item})}
-          >
-            <Icon name="briefcase" size={28} color={colors.gray[700]} />
-            <View className="ml-4">
-              <Text className="text-md font-semibold">{item.name}</Text>
-              <Text className="text-sm text-gray-500">{item.companyName}</Text>
-              <Text className="text-sm text-gray-500">{item.salary}$</Text>
-            </View>
-            {appliedJobs?.includes(item.id) ? (
-              <View className="flex-1 flex items-end mb-8">
-                <Icon name="check-circle" size={20} color={colors.green[500]} />
+      {isPending ? (
+        <View className="flex-1 items-center justify-center">
+          <ActivityIndicator size="large" color={colors.indigo[500]} />
+        </View>
+      ) : (
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          className="w-full"
+          data={jobs}
+          keyExtractor={item => item.id}
+          ListFooterComponent={() => {
+            return (
+              <View className="flex flex-row flex-wrap items-center justify-center gap-x-2 py-2">
+                {Array.from(
+                  {length: jobListMeta?.total / jobListMeta.perPage},
+                  (_, i) => (
+                    <TouchableOpacity
+                      key={i}
+                      className={`p-2 rounded-lg ${
+                        jobListMeta.page === i + 1 ? 'bg-blue-500' : 'bg-white'
+                      }`}
+                      onPress={() =>
+                        setJobListMeta({...jobListMeta, page: i + 1})
+                      }>
+                      <Text
+                        className={`text-sm font-semibold ${
+                          jobListMeta.page === i + 1
+                            ? 'text-white'
+                            : 'text-indigo-500'
+                        }`}>
+                        {i + 1}
+                      </Text>
+                    </TouchableOpacity>
+                  ),
+                )}
               </View>
-            ) : null}
-          </TouchableOpacity>
-        )}
-      />
+            );
+          }}
+          renderItem={({item}) => (
+            <TouchableOpacity
+              className="flex flex-row items-center p-4 my-[6px] ml-0 bg-white rounded-lg"
+              // onPress={() => navigation.navigate('JobDetail', {job: item})}
+            >
+              <Icon name="briefcase" size={28} color={colors.gray[700]} />
+              <View className="ml-4">
+                <Text className="text-md font-semibold">{item.name}</Text>
+                <Text className="text-sm text-gray-500">
+                  {item.companyName}
+                </Text>
+                <Text className="text-sm text-gray-500">{item.salary}$</Text>
+              </View>
+              {appliedJobs?.includes(item.id) ? (
+                <View className="flex-1 flex items-end mb-8">
+                  <Icon
+                    name="check-circle"
+                    size={20}
+                    color={colors.green[500]}
+                  />
+                </View>
+              ) : null}
+            </TouchableOpacity>
+          )}
+        />
+      )}
     </View>
   );
 };
