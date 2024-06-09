@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import 'react-native-gesture-handler';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
@@ -51,6 +51,7 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function MainTabNavigator() {
+  const navigation = useNavigation();
   const dispatch = useAppDispatch();
 
   function MyTabBar({state, descriptors, navigation}: any) {
@@ -128,17 +129,15 @@ function MainTabNavigator() {
         options={{
           headerLeft(props) {
             return (
-              <View>
-                <TouchableOpacity
-                  className="ml-4"
-                  onPress={() => dispatch(clearUser())}>
-                  <Icon
-                    name="right-from-bracket"
-                    size={16}
-                    style={{transform: [{rotate: '180deg'}]}}
-                  />
-                </TouchableOpacity>
-              </View>
+              <TouchableOpacity
+                className="ml-4"
+                onPress={() => dispatch(clearUser())}>
+                <Icon
+                  name="right-from-bracket"
+                  size={16}
+                  style={{transform: [{rotate: '180deg'}]}}
+                />
+              </TouchableOpacity>
             );
           },
         }}
@@ -146,15 +145,49 @@ function MainTabNavigator() {
       <Tab.Screen
         name="AppliedJobs"
         component={AppliedJobsScreen}
-        options={{}}
+        options={{
+          headerLeft(props) {
+            return (
+              <TouchableOpacity
+                className="ml-4"
+                onPress={() => navigation.navigate('JobListings')}>
+                <Icon name="arrow-left" size={16} />
+              </TouchableOpacity>
+            );
+          },
+        }}
       />
-      <Tab.Screen name="Profile" component={ProfileScreen} options={{}} />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          headerLeft(props) {
+            return (
+              <TouchableOpacity
+                className="ml-4"
+                onPress={() => navigation.navigate('JobListings')}>
+                <Icon name="arrow-left" size={16} />
+              </TouchableOpacity>
+            );
+          },
+          headerRight(props) {
+            return (
+              <TouchableOpacity
+                className="mr-4"
+                onPress={() => dispatch(clearUser())}>
+                <Icon name="right-from-bracket" size={16} />
+              </TouchableOpacity>
+            );
+          },
+        }}
+      />
     </Tab.Navigator>
   );
 }
 
 export default function App() {
   function AppNavigator() {
+    const dispatch = useAppDispatch();
     const token = useAppSelector(state => state.user.token);
 
     useEffect(() => {
@@ -166,11 +199,29 @@ export default function App() {
         <Stack.Navigator
           screenOptions={{headerShown: false}}
           initialRouteName="Splash">
+          <Stack.Screen name="Main" component={MainTabNavigator} />
           <Stack.Screen name="Splash" component={SplashScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Register" component={RegisterScreen} />
-          <Stack.Screen name="JobDetail" component={JobDetailScreen} />
-          <Stack.Screen name="Main" component={MainTabNavigator} />
+          <Stack.Screen
+            name="JobDetail"
+            component={JobDetailScreen}
+            options={{
+              headerLeft(props) {
+                return (
+                  <TouchableOpacity
+                    className="ml-4"
+                    onPress={() => dispatch(clearUser())}>
+                    <Icon
+                      name="right-from-bracket"
+                      size={16}
+                      style={{transform: [{rotate: '180deg'}]}}
+                    />
+                  </TouchableOpacity>
+                );
+              },
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     );

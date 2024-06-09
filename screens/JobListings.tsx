@@ -3,6 +3,8 @@ import {
   ActivityIndicator,
   Button,
   FlatList,
+  RefreshControl,
+  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
@@ -24,7 +26,7 @@ const JobListingsScreen = ({navigation}: any) => {
   const [jobListMeta, setJobListMeta] = React.useState<JobListMeta>({
     total: 0,
     page: 1,
-    perPage: 20,
+    perPage: 10,
   });
 
   const {
@@ -70,6 +72,17 @@ const JobListingsScreen = ({navigation}: any) => {
           className="w-full"
           data={jobs}
           keyExtractor={item => item.id}
+          refreshControl={
+            <RefreshControl
+              refreshing={isPending}
+              onRefresh={() =>
+                getAllJobsMutation({
+                  page: jobListMeta.page,
+                  perPage: jobListMeta.perPage,
+                })
+              }
+            />
+          }
           ListFooterComponent={() => {
             return (
               <View className="flex flex-row flex-wrap items-center justify-center gap-x-2 py-2">

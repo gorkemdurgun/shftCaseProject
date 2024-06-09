@@ -28,3 +28,7 @@ type GetJobsResponse = {
   data: Job[];
   meta: JobListMeta;
 };
+
+type GetJobsByIdRequest = {
+  id: string;
+};

@@ -15,14 +15,13 @@ import {jobsServices} from '../services/jobs';
 
 import {RootState} from '../redux/store';
 import useAppSelector from '../hooks/useAppSelector';
+import Snackbar from 'react-native-snackbar';
 
 const AppliedJobsScreen = ({navigation}: any) => {
   const appliedJobs = useAppSelector(state => state.user.user?.appliedJobs);
 
   const [totalListLength, setTotalListLength] = React.useState<number>(0);
   const [userAppliedJobs, setUserAppliedJobs] = React.useState<Job[]>([]);
-
-  console.log('appliedJobs', appliedJobs);
 
   const {
     mutate: getAllJobsMutation,
@@ -35,7 +34,13 @@ const AppliedJobsScreen = ({navigation}: any) => {
       data = data.filter(job => appliedJobs?.includes(job.id));
       setUserAppliedJobs(data);
     },
-    onError: error => {},
+    onError: error => {
+      console.log(error);
+      Snackbar.show({
+        text: error.message,
+        duration: Snackbar.LENGTH_SHORT,
+      });
+    },
   });
 
   useEffect(() => {
