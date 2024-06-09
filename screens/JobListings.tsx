@@ -17,9 +17,7 @@ import {RootState} from '../redux/store';
 import useAppSelector from '../hooks/useAppSelector';
 
 const JobListingsScreen = ({navigation}: any) => {
-  const appliedJobs = useAppSelector(
-    (state: RootState) => state.user.user?.appliedJobs,
-  );
+  const appliedJobs = useAppSelector(state => state.user.user?.appliedJobs);
 
   const [search, setSearch] = React.useState('');
   const [jobs, setJobs] = React.useState<Job[]>([]);
@@ -108,10 +106,13 @@ const JobListingsScreen = ({navigation}: any) => {
               <Icon name="briefcase" size={28} color={colors.gray[700]} />
               <View className="ml-4">
                 <Text className="text-md font-semibold">{item.name}</Text>
-                <Text className="text-sm text-gray-500">
-                  {item.companyName}
+                <Text className="text-sm text-indigo-400">
+                  Company:{' '}
+                  <Text className="text-black">{item.companyName}</Text>
                 </Text>
-                <Text className="text-sm text-gray-500">{item.salary}$</Text>
+                <Text className="text-sm text-indigo-400">
+                  Salary: <Text className="text-black">{item.salary}$</Text>
+                </Text>
               </View>
               {appliedJobs?.includes(item.id) ? (
                 <View className="flex-1 flex items-end mb-8">
