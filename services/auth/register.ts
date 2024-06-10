@@ -1,4 +1,5 @@
 import apiAxios from '../../api/apiAxios';
+import toError from '../../utils/toError';
 
 export const register = async (
   credentials: RegisterRequest,
@@ -9,8 +10,7 @@ export const register = async (
       credentials,
     );
     return data;
-  } catch (error: Error | any) {
-    const toError = new Error(error.response.data.message);
-    throw toError;
+  } catch (error) {
+    throw toError(error);
   }
 };

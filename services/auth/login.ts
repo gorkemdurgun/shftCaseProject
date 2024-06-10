@@ -1,3 +1,4 @@
+import toError from '../../utils/toError';
 import apiAxios from '../../api/apiAxios';
 
 export const login = async (
@@ -6,8 +7,7 @@ export const login = async (
   try {
     const {data} = await apiAxios.post<LoginResponse>('/login', credentials);
     return data;
-  } catch (error: Error | any) {
-    const toError = new Error(error.response.data.message);
-    throw toError;
+  } catch (error) {
+    throw toError(error);
   }
 };

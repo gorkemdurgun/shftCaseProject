@@ -1,4 +1,5 @@
 import apiAxios from '../../api/apiAxios';
+import toError from '../../utils/toError';
 
 export const getJobs = async ({
   page,
@@ -20,8 +21,7 @@ export const getJobs = async ({
       },
     });
     return response;
-  } catch (error: Error | any) {
-    const toError = new Error(error.response.data.message);
-    throw toError;
+  } catch (error) {
+    throw toError(error);
   }
 };

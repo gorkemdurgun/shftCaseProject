@@ -1,8 +1,5 @@
 {
   "extends": "@react-native/typescript-config/tsconfig.json",
-  "compilerOptions": {
-    "baseUrl": "./"
-  },
   "exclude": [
     "node_modules",
     "babel.config.js",
