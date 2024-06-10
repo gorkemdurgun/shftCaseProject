@@ -17,8 +17,9 @@ import {jobsServices} from '../services/jobs';
 
 import {RootState} from '../redux/store';
 import useAppSelector from '../hooks/useAppSelector';
+import JobCard from '../components/JobCard';
 
-const JobListingsScreen = ({navigation}: any) => {
+const JobListingsScreen = ({navigation}: {navigation: any}) => {
   const appliedJobs = useAppSelector(state => state.user.user?.appliedJobs);
 
   const [search, setSearch] = React.useState('');
@@ -39,7 +40,9 @@ const JobListingsScreen = ({navigation}: any) => {
       setJobs(data);
       setJobListMeta(meta);
     },
-    onError: error => {},
+    onError: error => {
+      console.log('job listings error', error);
+    },
   });
 
   useEffect(() => {
@@ -47,7 +50,7 @@ const JobListingsScreen = ({navigation}: any) => {
       page: jobListMeta.page,
       perPage: jobListMeta.perPage,
     });
-  }, []);
+  }, [getAllJobsMutation, jobListMeta]);
 
   return (
     <View className="flex-1 items-center pt-4 px-2 pb-0 bg-gray-300">
@@ -100,33 +103,13 @@ const JobListingsScreen = ({navigation}: any) => {
               </View>
             );
           }}
-          renderItem={({item}) => (
-            <TouchableOpacity
-              className="flex flex-row items-center p-4 my-[6px] ml-0 bg-white rounded-lg"
-              onPress={() =>
-                navigation.navigate('JobDetail', {jobId: item.id})
-              }>
-              <Icon name="briefcase" size={28} color={colors.gray[700]} />
-              <View className="ml-4">
-                <Text className="text-md font-semibold">{item.name}</Text>
-                <Text className="text-sm text-indigo-400">
-                  Company:{' '}
-                  <Text className="text-black">{item.companyName}</Text>
-                </Text>
-                <Text className="text-sm text-indigo-400">
-                  Salary: <Text className="text-black">{item.salary}$</Text>
-                </Text>
-              </View>
-              {appliedJobs?.includes(item.id) ? (
-                <View className="flex-1 flex items-end mb-8">
-                  <Icon
-                    name="check-circle"
-                    size={20}
-                    color={colors.green[500]}
-                  />
-                </View>
-              ) : null}
-            </TouchableOpacity>
+          renderItem={({item, index}) => (
+            <JobCard
+              key={index}
+              job={item}
+              isApplied={appliedJobs?.includes(item.id)}
+              onPress={() => navigation.navigate('JobDetail', {jobId: item.id})}
+            />
           )}
         />
       )}

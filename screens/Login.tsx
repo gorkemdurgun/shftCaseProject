@@ -17,8 +17,8 @@ const LoginScreen: React.FC = ({navigation}: any) => {
   const dispatch = useAppDispatch();
 
   const [loginForm, setLoginForm] = React.useState<LoginRequest>({
-    email: 'test@test.com',
-    password: 'password',
+    email: '123@test.com',
+    password: 'password123',
   });
   // const [loading, setLoading] = React.useState<boolean>(false);
 

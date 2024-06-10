@@ -2,7 +2,10 @@ import React, {useEffect} from 'react';
 import 'react-native-gesture-handler';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {
+  BottomTabNavigationProp,
+  createBottomTabNavigator,
+} from '@react-navigation/bottom-tabs';
 
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
@@ -22,110 +25,19 @@ import colors from 'tailwindcss/colors';
 import useAppSelector from './hooks/useAppSelector';
 import useAppDispatch from './hooks/useAppDispatch';
 import {clearUser} from './redux/slices/userSlice';
-
-// import './global.css';
-
-const routes: {
-  route: string;
-  title: string;
-  icon: string;
-}[] = [
-  {
-    route: 'JobListings',
-    title: 'Job Listings',
-    icon: 'list',
-  },
-  {
-    route: 'AppliedJobs',
-    title: 'Applied Jobs',
-    icon: 'list-check',
-  },
-  {
-    route: 'Profile',
-    title: 'Profile',
-    icon: 'user',
-  },
-];
-
-const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
+import BottomTabBar from './components/BottomTabBar';
+import {Stack, Tab, useAppNavigation} from './hooks/useAppNavigation';
 
 function MainTabNavigator() {
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
   const dispatch = useAppDispatch();
-
-  function MyTabBar({state, descriptors, navigation}: any) {
-    const visibleRoutes = state.routes.filter(
-      (route: any) => route.name !== 'JobDetail',
-    );
-    return (
-      <View
-        className="flex flex-row justify-between items-center p-4"
-        style={{backgroundColor: colors.indigo[700]}}>
-        {visibleRoutes.map((route: any, index: number) => {
-          const {options} = descriptors[route.key];
-          const label =
-            options.tabBarLabel !== undefined
-              ? options.tabBarLabel
-              : options.title !== undefined
-              ? options.title
-              : route.name;
-
-          const isFocused = state.index === index;
-
-          const onPress = () => {
-            const event = navigation.emit({
-              type: 'tabPress',
-              target: route.key,
-              canPreventDefault: true,
-            });
-
-            if (!isFocused && !event.defaultPrevented) {
-              navigation.navigate(route.name);
-            }
-          };
-
-          const onLongPress = () => {
-            navigation.emit({
-              type: 'tabLongPress',
-              target: route.key,
-            });
-          };
-
-          return (
-            <TouchableOpacity
-              key={index}
-              accessibilityRole="button"
-              accessibilityState={isFocused ? {selected: true} : {}}
-              accessibilityLabel={options.tabBarAccessibilityLabel}
-              testID={options.tabBarTestID}
-              onPress={onPress}
-              onLongPress={onLongPress}
-              className="flex-1 justify-center items-center gap-y-1">
-              <Icon
-                name={routes[index]?.icon}
-                size={20}
-                color={isFocused ? colors.white : colors.indigo[300]}
-              />
-              <Text
-                style={{
-                  color: isFocused ? colors.white : colors.indigo[300],
-                }}>
-                {routes[index]?.title}
-              </Text>
-            </TouchableOpacity>
-          );
-        })}
-      </View>
-    );
-  }
 
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: true,
       }}
-      tabBar={props => <MyTabBar {...props} />}>
+      tabBar={props => <BottomTabBar {...props} />}>
       <Tab.Screen
         name="JobListings"
         component={JobListingsScreen}
@@ -153,7 +65,9 @@ function MainTabNavigator() {
             return (
               <TouchableOpacity
                 className="ml-4"
-                onPress={() => navigation.navigate('JobListings')}>
+                onPress={() =>
+                  navigation.navigate('Main', {screen: 'JobListings'})
+                }>
                 <Icon name="arrow-left" size={16} />
               </TouchableOpacity>
             );
@@ -168,7 +82,11 @@ function MainTabNavigator() {
             return (
               <TouchableOpacity
                 className="ml-4"
-                onPress={() => navigation.navigate('JobListings')}>
+                onPress={() =>
+                  navigation.navigate('Main', {
+                    screen: 'JobListings',
+                  })
+                }>
                 <Icon name="arrow-left" size={16} />
               </TouchableOpacity>
             );
@@ -187,13 +105,18 @@ function MainTabNavigator() {
       <Tab.Screen
         name="JobDetail"
         component={JobDetailScreen}
+        initialParams={{jobId: ''}}
         options={{
           tabBarButton: () => null,
           headerLeft(props) {
             return (
               <TouchableOpacity
                 className="ml-4"
-                onPress={() => navigation.navigate('JobListings')}>
+                onPress={() =>
+                  navigation.navigate('Main', {
+                    screen: 'JobListings',
+                  })
+                }>
                 <Icon name="arrow-left" size={16} />
               </TouchableOpacity>
             );
@@ -222,25 +145,6 @@ export default function App() {
           <Stack.Screen name="Splash" component={SplashScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Register" component={RegisterScreen} />
-          <Stack.Screen
-            name="JobDetail"
-            component={JobDetailScreen}
-            options={{
-              headerLeft(props) {
-                return (
-                  <TouchableOpacity
-                    className="ml-4"
-                    onPress={() => dispatch(clearUser())}>
-                    <Icon
-                      name="right-from-bracket"
-                      size={16}
-                      style={{transform: [{rotate: '180deg'}]}}
-                    />
-                  </TouchableOpacity>
-                );
-              },
-            }}
-          />
         </Stack.Navigator>
       </NavigationContainer>
     );

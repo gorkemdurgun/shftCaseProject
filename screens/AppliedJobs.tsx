@@ -16,8 +16,9 @@ import {jobsServices} from '../services/jobs';
 import {RootState} from '../redux/store';
 import useAppSelector from '../hooks/useAppSelector';
 import Snackbar from 'react-native-snackbar';
+import JobCard from '../components/JobCard';
 
-const AppliedJobsScreen = ({navigation}: any) => {
+const AppliedJobsScreen = ({navigation}: {navigation: any}) => {
   const appliedJobs = useAppSelector(state => state.user.user?.appliedJobs);
 
   const [totalListLength, setTotalListLength] = React.useState<number>(0);
@@ -35,7 +36,7 @@ const AppliedJobsScreen = ({navigation}: any) => {
       setUserAppliedJobs(data);
     },
     onError: error => {
-      console.log(error);
+      console.log('applied jobs error', error);
       Snackbar.show({
         text: error.message,
         duration: Snackbar.LENGTH_SHORT,
@@ -61,24 +62,17 @@ const AppliedJobsScreen = ({navigation}: any) => {
           showsVerticalScrollIndicator={false}
           data={userAppliedJobs}
           keyExtractor={item => item.id}
-          renderItem={({item}) => (
-            <TouchableOpacity
-              className="flex flex-row items-center p-4 my-[6px] ml-0 bg-white rounded-lg"
-              onPress={() =>
-                navigation.navigate('JobDetail', {jobId: item.id})
-              }>
-              <Icon name="briefcase" size={28} color={colors.gray[700]} />
-              <View className="ml-4">
-                <Text className="text-md font-semibold">{item.name}</Text>
-                <Text className="text-sm text-indigo-400">
-                  Company:{' '}
-                  <Text className="text-black">{item.companyName}</Text>
-                </Text>
-                <Text className="text-sm text-indigo-400">
-                  Salary: <Text className="text-black">{item.salary}$</Text>
-                </Text>
-              </View>
-            </TouchableOpacity>
+          renderItem={({item, index}) => (
+            <JobCard
+              key={index}
+              job={item}
+              onPress={() => {
+                navigation.navigate('Main', {
+                  screen: 'JobDetail',
+                  params: {jobId: item.id},
+                });
+              }}
+            />
           )}
         />
       )}

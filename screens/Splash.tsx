@@ -13,7 +13,7 @@ const SplashScreen: React.FC<{navigation: any}> = ({navigation}) => {
       } else {
         navigation.navigate('Login');
       }
-    }, 1000); // 1 saniye bekleme süresi, gerçek bir uygulamada bu süre API çağrıları vb. için daha uzun olabilir
+    }, 1000);
   }, [token, navigation]);
 
   return (

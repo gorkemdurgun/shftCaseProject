@@ -21,7 +21,6 @@ export const getJobs = async ({
     });
     return response;
   } catch (error: Error | any) {
-    console.log(error);
     const toError = new Error(error.response.data.message);
     throw toError;
   }
