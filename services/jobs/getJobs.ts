@@ -14,10 +14,14 @@ export const getJobs = async ({
       params: {
         page,
         perPage,
-        orderByField,
-        orderByDirection,
-        searchField,
-        searchQuery,
+        orderBy: {
+          field: orderByField,
+          direction: orderByDirection,
+        },
+        search: {
+          field: searchField,
+          query: searchQuery,
+        },
       },
     });
     return response;

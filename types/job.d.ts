@@ -15,12 +15,16 @@ type JobListMeta = {
   perPage: number;
 };
 
+type OrderByField = 'createdAt' | 'salary';
+type OrderByDirection = 'asc' | 'desc';
+type SearchField = 'name' | 'companyName' | 'location' | 'salary';
+
 type GetJobsRequest = {
   page?: number;
   perPage?: number;
-  orderByField?: 'createdAt' | 'salary';
-  orderByDirection?: 'asc' | 'desc';
-  searchField?: string;
+  orderByField?: OrderByField;
+  orderByDirection?: OrderByDirection;
+  searchField?: SearchField;
   searchQuery?: string;
 };
 
