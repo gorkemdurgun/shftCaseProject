@@ -1,7 +1,8 @@
 import axios from 'axios';
 import store from '../redux/store';
-import {clearUser} from '../redux/slices/userSlice';
+import {clearUser, refreshTokens} from '../redux/slices/userSlice';
 import Snackbar from 'react-native-snackbar';
+import {authServices} from '../services/auth';
 
 const apiAxios = axios.create({
   baseURL: 'https://novel-project-ntj8t.ampt.app/api',
@@ -14,9 +15,9 @@ const apiAxios = axios.create({
 
 apiAxios.interceptors.request.use(
   config => {
-    const token = store.getState().user.token;
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    const accessToken = store.getState().user.accessToken;
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
     return config;
   },
@@ -31,11 +32,22 @@ apiAxios.interceptors.response.use(
   },
   error => {
     if (error.response.status === 401) {
-      Snackbar.show({
-        text: 'Unauthorized, please login again',
-        duration: 3000,
-      });
-      store.dispatch(clearUser());
+      const currentRefreshToken = store.getState().user.refreshToken;
+      if (currentRefreshToken) {
+        authServices
+          .refreshToken({refreshToken: currentRefreshToken})
+          .then(response => {
+            store.dispatch(
+              refreshTokens({
+                accessToken: response.accessToken,
+                refreshToken: response.refreshToken,
+              }),
+            );
+          })
+          .catch(() => {
+            store.dispatch(clearUser());
+          });
+      }
     }
     return Promise.reject(error);
   },

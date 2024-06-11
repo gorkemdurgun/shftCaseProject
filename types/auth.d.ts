@@ -4,7 +4,7 @@ type LoginRequest = {
 };
 
 type LoginResponse = {
-  user: User;
+  user: LoggedUser;
   tokenType: string;
   accessToken: string;
   refreshToken: string;
@@ -16,7 +16,18 @@ type RegisterRequest = {
 };
 
 type RegisterResponse = {
-  user: User;
+  user: LoggedUser;
+  tokenType: string;
+  accessToken: string;
+  refreshToken: string;
+};
+
+type RefreshTokenRequest = {
+  refreshToken: string;
+};
+
+type RefreshTokenResponse = {
+  user: LoggedUser;
   tokenType: string;
   accessToken: string;
   refreshToken: string;

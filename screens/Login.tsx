@@ -32,8 +32,8 @@ const LoginScreen: React.FC = ({navigation}: any) => {
       // console.log(data.accessToken);
       dispatch(
         setUser({
-          user: data.user,
-          token: data.accessToken,
+          loggedUser: data.user,
+          accessToken: data.accessToken,
         }),
       );
     },

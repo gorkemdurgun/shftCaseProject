@@ -27,8 +27,8 @@ const JobCard = ({
         </Text>
       </View>
       {isApplied && (
-        <View className="flex-1 flex items-end mb-8">
-          <Icon name="check-circle" size={20} color={colors.green[500]} />
+        <View className="flex items-end ml-auto mb-12">
+          <Icon name="check-circle" size={16} color={colors.green[500]} />
         </View>
       )}
     </TouchableOpacity>

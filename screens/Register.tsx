@@ -31,8 +31,8 @@ const RegisterScreen: React.FC = ({navigation}: any) => {
     onSuccess: data => {
       dispatch(
         setUser({
-          user: data.user,
-          token: data.accessToken,
+          loggedUser: data.user,
+          accessToken: data.accessToken,
         }),
       );
     },

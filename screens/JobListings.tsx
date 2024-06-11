@@ -25,7 +25,9 @@ const JobListingsScreen = ({navigation}: {navigation: any}) => {
   const orderRef = React.useRef<RNPickerSelect>(null);
   const orderDirectionRef = React.useRef<RNPickerSelect>(null);
 
-  const appliedJobs = useAppSelector(state => state.user.user?.appliedJobs);
+  const appliedJobs = useAppSelector(
+    state => state.user.loggedUser?.appliedJobs,
+  );
 
   const [searchQuery, setSearchQuery] = React.useState('');
   const [searchField, setSearchField] = React.useState<SearchField | null>(
@@ -105,7 +107,7 @@ const JobListingsScreen = ({navigation}: {navigation: any}) => {
   ]);
 
   return (
-    <View className="flex-1 items-center pt-4 px-2 pb-0 bg-gray-300">
+    <View className="flex-1 items-center p-4 pb-0 bg-gray-300">
       <View
         className="w-full flex flex-row items-center px-2 py-3 rounded-lg overflow-hidden"
         style={{backgroundColor: colors.indigo[100]}}>

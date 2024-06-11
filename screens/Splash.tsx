@@ -4,17 +4,17 @@ import {View, Text, ActivityIndicator, Animated} from 'react-native';
 import useAppSelector from '../hooks/useAppSelector';
 
 const SplashScreen: React.FC<{navigation: any}> = ({navigation}) => {
-  const token = useAppSelector(state => state.user.token);
+  const accessToken = useAppSelector(state => state.user.accessToken);
 
   useEffect(() => {
     setTimeout(() => {
-      if (token) {
-        navigation.navigate('Main', {screen: 'JobListings'});
+      if (accessToken) {
+        navigation.navigate('Main', {screen: 'Profile'});
       } else {
         navigation.navigate('Login');
       }
     }, 1000);
-  }, [token, navigation]);
+  }, [accessToken, navigation]);
 
   const bounceValue = new Animated.Value(0);
   Animated.loop(

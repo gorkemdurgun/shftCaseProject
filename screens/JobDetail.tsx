@@ -30,7 +30,9 @@ const JobDetailScreen = ({
   navigation: JobDetailScreenNavigationProp;
 }) => {
   const dispatch = useAppDispatch();
-  const userAppliedJobs = useAppSelector(state => state.user.user?.appliedJobs);
+  const userAppliedJobs = useAppSelector(
+    state => state.user.loggedUser?.appliedJobs,
+  );
 
   const [selectedJob, setSelectedJob] = useState<Job>();
 
@@ -118,7 +120,9 @@ const JobDetailScreen = ({
     <ScrollView className="flex-1 bg-gray-300">
       <View className="flex flex-col items-center gap-y-4 m-4 p-4 bg-indigo-100 rounded-2xl">
         <FaIcon name="briefcase" size={32} color="blue" />
-        <Text className="text-xl font-bold">{selectedJob?.name}</Text>
+        <Text className="text-xl font-bold text-center">
+          {selectedJob?.name}
+        </Text>
         <Text className="font-bold text-md">
           Company:{' '}
           <Text className="font-bold font-normal">
@@ -133,7 +137,7 @@ const JobDetailScreen = ({
         </Text>
         <View className="flex flex-col items-center gap-y-2">
           <Text className="font-bold text-md"> Keywords: </Text>
-          <View className="flex flex-row flex-wrap gap-2">
+          <View className="flex flex-row flex-wrap justify-center gap-2">
             {selectedJob?.keywords.map((keyword, index) => (
               <View key={index} className="border p-1 rounded-md">
                 <Text className="text-md">{keyword}</Text>

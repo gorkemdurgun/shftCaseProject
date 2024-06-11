@@ -1,35 +1,49 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 interface UserState {
-  user: User | null;
-  token: string | null;
+  loggedUser: LoggedUser | null;
+  userInformations: User | null;
+  accessToken: string | null;
+  refreshToken: string | null;
 }
 
 const initialState: UserState = {
-  user: null,
-  token: null,
+  loggedUser: null,
+  userInformations: null,
+  accessToken: null,
+  refreshToken: null,
 };
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<{user: User; token: string}>) => {
-      state.user = action.payload.user;
-      state.token = action.payload.token;
+    setUser: (
+      state,
+      action: PayloadAction<{loggedUser: LoggedUser; accessToken: string}>,
+    ) => {
+      state.loggedUser = action.payload.loggedUser;
+      state.accessToken = action.payload.accessToken;
     },
     clearUser: state => {
-      state.user = null;
-      state.token = null;
+      state.loggedUser = null;
+      state.accessToken = null;
+    },
+    refreshTokens: (
+      state,
+      action: PayloadAction<{accessToken: string; refreshToken: string}>,
+    ) => {
+      state.accessToken = action.payload.accessToken;
+      state.refreshToken = action.payload.refreshToken;
     },
     addToAppliedJobs: (state, action: PayloadAction<{jobId?: string}>) => {
-      if (state.user && action.payload.jobId) {
-        state.user.appliedJobs.push(action.payload.jobId);
+      if (state.loggedUser && action.payload.jobId) {
+        state.loggedUser.appliedJobs.push(action.payload.jobId);
       }
     },
     removeFromAppliedJobs: (state, action: PayloadAction<{jobId?: string}>) => {
-      if (state.user && action.payload.jobId) {
-        state.user.appliedJobs = state.user.appliedJobs.filter(
+      if (state.loggedUser && action.payload.jobId) {
+        state.loggedUser.appliedJobs = state.loggedUser.appliedJobs.filter(
           jobId => jobId !== action.payload.jobId,
         );
       }
@@ -37,7 +51,12 @@ const userSlice = createSlice({
   },
 });
 
-export const {setUser, clearUser, addToAppliedJobs, removeFromAppliedJobs} =
-  userSlice.actions;
+export const {
+  setUser,
+  clearUser,
+  refreshTokens,
+  addToAppliedJobs,
+  removeFromAppliedJobs,
+} = userSlice.actions;
 
 export default userSlice.reducer;
