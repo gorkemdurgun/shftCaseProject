@@ -27,9 +27,17 @@ const userSlice = createSlice({
         state.user.appliedJobs.push(action.payload.jobId);
       }
     },
+    removeFromAppliedJobs: (state, action: PayloadAction<{jobId?: string}>) => {
+      if (state.user && action.payload.jobId) {
+        state.user.appliedJobs = state.user.appliedJobs.filter(
+          jobId => jobId !== action.payload.jobId,
+        );
+      }
+    },
   },
 });
 
-export const {setUser, clearUser, addToAppliedJobs} = userSlice.actions;
+export const {setUser, clearUser, addToAppliedJobs, removeFromAppliedJobs} =
+  userSlice.actions;
 
 export default userSlice.reducer;

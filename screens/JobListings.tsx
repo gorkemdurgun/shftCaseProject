@@ -51,34 +51,30 @@ const JobListingsScreen = ({navigation}: {navigation: any}) => {
   } = useMutation({
     mutationFn: jobsServices.getJobs,
     onSuccess: ({data, meta}) => {
-      console.log(
-        'job salaries',
-        data.map(job => job.salary),
-      );
       setJobs(data);
       setJobListMeta(meta);
     },
     onError: error => {
       Snackbar.show({
-        text: 'Failed to fetch jobs',
+        text: error.message,
         duration: 1000,
       });
     },
   });
 
   useEffect(() => {
-    if (searchQuery && searchField === null) {
-      Snackbar.show({
-        text: 'Please select a search field',
-        duration: 1000,
-      });
-    } else if (searchField && !searchQuery) {
-      Snackbar.show({
-        text: 'Please enter a search query',
-        duration: 1000,
-      });
+    if (searchQuery && !searchField) {
+      setSearchField('name');
     }
   }, [searchField, searchQuery]);
+
+  useEffect(() => {
+    if (!orderByField && orderByDirection) {
+      setOrderByField('createdAt');
+    } else if (orderByField && !orderByDirection) {
+      setOrderByDirection('asc');
+    }
+  }, [orderByField, orderByDirection]);
 
   useEffect(() => {
     if (searchField && searchQuery) {
@@ -160,7 +156,7 @@ const JobListingsScreen = ({navigation}: {navigation: any}) => {
           <RNPickerSelect
             ref={orderRef}
             value={orderByField}
-            placeholder={{label: 'Ordered by...', value: null}}
+            placeholder={{label: 'Ordered by...', value: undefined}}
             onValueChange={setOrderByField}
             style={{
               placeholder: {
@@ -189,7 +185,7 @@ const JobListingsScreen = ({navigation}: {navigation: any}) => {
           <RNPickerSelect
             ref={orderDirectionRef}
             value={orderByDirection}
-            placeholder={{label: 'Sorted by...', value: null}}
+            placeholder={{label: 'Sorted by...', value: undefined}}
             onValueChange={setOrderByDirection}
             style={{
               placeholder: {

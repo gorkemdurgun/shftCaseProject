@@ -50,11 +50,6 @@ const AppliedJobsScreen = ({navigation}: {navigation: any}) => {
     });
   }, [getAllJobsMutation, totalListLength]);
 
-  useEffect(() => {
-    console.log('applied jobs', userAppliedJobs);
-    console.log('applied jobs length', userAppliedJobs.length);
-  }, [userAppliedJobs]);
-
   return (
     <View className="flex-1 items-center pt-4 px-2 pb-0 bg-gray-300">
       {(isError || isPending || userAppliedJobs.length === 0) && (

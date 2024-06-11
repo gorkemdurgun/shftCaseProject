@@ -17,7 +17,10 @@ import {
 import Snackbar from 'react-native-snackbar';
 import useAppSelector from '../hooks/useAppSelector';
 import useAppDispatch from '../hooks/useAppDispatch';
-import {addToAppliedJobs} from '../redux/slices/userSlice';
+import {
+  addToAppliedJobs,
+  removeFromAppliedJobs,
+} from '../redux/slices/userSlice';
 
 const JobDetailScreen = ({
   route,
@@ -63,7 +66,7 @@ const JobDetailScreen = ({
     useMutation({
       mutationFn: jobsServices.withdrawJob,
       onSuccess: () => {
-        dispatch(addToAppliedJobs({jobId: selectedJob?.id}));
+        dispatch(removeFromAppliedJobs({jobId: selectedJob?.id}));
         Snackbar.show({
           text: 'Withdrawn successfully',
           duration: Snackbar.LENGTH_SHORT,
