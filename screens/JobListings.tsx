@@ -176,9 +176,10 @@ const JobListingsScreen = ({navigation}: {navigation: any}) => {
             ]}
           />
         </TouchableOpacity>
-        <View
+        <TouchableOpacity
           style={{backgroundColor: colors.indigo[100]}}
-          className="flex-1 flex-row items-center ml-1 p-2 rounded-lg ">
+          className="flex-1 flex-row items-center ml-1 p-2 rounded-lg "
+          onPress={() => orderDirectionRef?.current?.togglePicker(true)}>
           <Icon
             name="sort"
             style={{marginRight: 8}}
@@ -203,7 +204,7 @@ const JobListingsScreen = ({navigation}: {navigation: any}) => {
               {label: 'Descending', value: 'desc'},
             ]}
           />
-        </View>
+        </TouchableOpacity>
       </View>
 
       {(isError || isPending || jobs.length === 0) && (

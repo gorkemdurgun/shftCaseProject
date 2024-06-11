@@ -22,9 +22,9 @@ const userSlice = createSlice({
       state.user = null;
       state.token = null;
     },
-    addToAppliedJobs: (state, action: PayloadAction<string>) => {
-      if (state.user) {
-        state.user.appliedJobs.push(action.payload);
+    addToAppliedJobs: (state, action: PayloadAction<{jobId?: string}>) => {
+      if (state.user && action.payload.jobId) {
+        state.user.appliedJobs.push(action.payload.jobId);
       }
     },
   },

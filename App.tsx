@@ -28,6 +28,10 @@ import {clearUser} from './redux/slices/userSlice';
 import BottomTabBar from './components/BottomTabBar';
 import {Stack, Tab, useAppNavigation} from './hooks/useAppNavigation';
 
+if (__DEV__) {
+  require('./ReactotronConfig');
+}
+
 function MainTabNavigator() {
   const navigation = useAppNavigation();
   const dispatch = useAppDispatch();
