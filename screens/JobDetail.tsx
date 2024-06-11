@@ -14,6 +14,8 @@ import {
   JobDetailScreenNavigationProp,
   JobDetailScreenRouteProp,
 } from '../types/navigation';
+import Snackbar from 'react-native-snackbar';
+import useAppSelector from '../hooks/useAppSelector';
 
 const JobDetailScreen = ({
   route,
@@ -22,7 +24,7 @@ const JobDetailScreen = ({
   route: JobDetailScreenRouteProp;
   navigation: JobDetailScreenNavigationProp;
 }) => {
-  console.log(route.params.jobId);
+  const userAppliedJobs = useAppSelector(state => state.user.user?.appliedJobs);
 
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
 
@@ -33,8 +35,24 @@ const JobDetailScreen = ({
   } = useMutation({
     mutationFn: jobsServices.getJobsById,
     onSuccess: job => {
-      console.log('job name', job.name);
       setSelectedJob(job);
+    },
+    onError: error => {
+      console.log(error);
+    },
+  });
+
+  const {
+    mutate: applyJobMutation,
+    isPending: isApplyJobPending,
+    isError: isApplyJobError,
+  } = useMutation({
+    mutationFn: jobsServices.applyJob,
+    onSuccess: () => {
+      Snackbar.show({
+        text: 'Applied successfully',
+        duration: Snackbar.LENGTH_SHORT,
+      });
     },
     onError: error => {
       console.log(error);
@@ -48,6 +66,14 @@ const JobDetailScreen = ({
       });
     }
   }, [getAllJobsMutation, route.params.jobId]);
+
+  if (!selectedJob) {
+    return (
+      <View className="flex-1 items-center justify-center">
+        <Text className="text-red-500">No job found</Text>
+      </View>
+    );
+  }
 
   if (isPending) {
     return (
@@ -90,9 +116,20 @@ const JobDetailScreen = ({
             <Text className="text-md">{selectedJob?.description}</Text>
           </View>
         </View>
-        <TouchableOpacity className="py-2 px-8 bg-blue-500 rounded-lg">
-          <Text className="text-white">Apply</Text>
-        </TouchableOpacity>
+        {userAppliedJobs?.includes(selectedJob?.id) ? (
+          <TouchableOpacity
+            className="py-2 px-8 bg-red-500 rounded-lg"
+            // onPress={() => applyJobMutation({id: selectedJob?.id})}
+          >
+            <Text className="text-white">Withdraw</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            className="py-2 px-8 bg-blue-500 rounded-lg"
+            onPress={() => applyJobMutation({id: selectedJob?.id})}>
+            <Text className="text-white">Apply</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </ScrollView>
   );

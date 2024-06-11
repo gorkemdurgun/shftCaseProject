@@ -50,13 +50,28 @@ const AppliedJobsScreen = ({navigation}: {navigation: any}) => {
     });
   }, [getAllJobsMutation, totalListLength]);
 
+  useEffect(() => {
+    console.log('applied jobs', userAppliedJobs);
+    console.log('applied jobs length', userAppliedJobs.length);
+  }, [userAppliedJobs]);
+
   return (
     <View className="flex-1 items-center pt-4 px-2 pb-0 bg-gray-300">
-      {isPending ? (
+      {(isError || isPending || userAppliedJobs.length === 0) && (
         <View className="flex-1 items-center justify-center">
-          <ActivityIndicator size="large" color={colors.indigo[500]} />
+          {isPending && (
+            <ActivityIndicator size="large" color={colors.indigo[500]} />
+          )}
+          {isError && <Text>Error fetching applied jobs</Text>}
+          {userAppliedJobs.length === 0 && !isPending && !isError && (
+            <Text className="text-lg text-gray-500">
+              You have not applied to any jobs yet
+            </Text>
+          )}
         </View>
-      ) : (
+      )}
+
+      {userAppliedJobs.length > 0 && (
         <FlatList
           className="w-full"
           showsVerticalScrollIndicator={false}

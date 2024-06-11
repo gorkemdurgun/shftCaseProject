@@ -22,9 +22,14 @@ const userSlice = createSlice({
       state.user = null;
       state.token = null;
     },
+    addToAppliedJobs: (state, action: PayloadAction<string>) => {
+      if (state.user) {
+        state.user.appliedJobs.push(action.payload);
+      }
+    },
   },
 });
 
-export const {setUser, clearUser} = userSlice.actions;
+export const {setUser, clearUser, addToAppliedJobs} = userSlice.actions;
 
 export default userSlice.reducer;

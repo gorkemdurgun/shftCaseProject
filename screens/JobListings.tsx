@@ -51,12 +51,18 @@ const JobListingsScreen = ({navigation}: {navigation: any}) => {
   } = useMutation({
     mutationFn: jobsServices.getJobs,
     onSuccess: ({data, meta}) => {
-      console.log('job listings', data);
+      console.log(
+        'job salaries',
+        data.map(job => job.salary),
+      );
       setJobs(data);
       setJobListMeta(meta);
     },
     onError: error => {
-      console.log('job listings error', error);
+      Snackbar.show({
+        text: 'Failed to fetch jobs',
+        duration: 1000,
+      });
     },
   });
 
@@ -88,6 +94,8 @@ const JobListingsScreen = ({navigation}: {navigation: any}) => {
       getAllJobsMutation({
         page: jobListMeta.page,
         perPage: jobListMeta.perPage,
+        orderByField,
+        orderByDirection,
       });
     }
   }, [
@@ -198,22 +206,24 @@ const JobListingsScreen = ({navigation}: {navigation: any}) => {
         </View>
       </View>
 
-      <View className="flex-1 items-center justify-center">
-        {isError && (
-          <>
-            <Text className="text-lg text-red-500">Failed to fetch jobs</Text>
-            <TouchableOpacity onPress={() => getAllJobsMutation({})}>
-              <Text className="text-lg text-blue-500">Retry</Text>
-            </TouchableOpacity>
-          </>
-        )}
-        {isPending && (
-          <ActivityIndicator size="large" color={colors.indigo[500]} />
-        )}
-        {jobs.length === 0 && !isPending && !isError && (
-          <Text className="text-lg text-gray-500">No jobs found</Text>
-        )}
-      </View>
+      {(isError || isPending || jobs.length === 0) && (
+        <View className="flex-1 items-center justify-center">
+          {isError && (
+            <>
+              <Text className="text-lg text-red-500">Failed to fetch jobs</Text>
+              <TouchableOpacity onPress={() => getAllJobsMutation({})}>
+                <Text className="text-lg text-blue-500">Retry</Text>
+              </TouchableOpacity>
+            </>
+          )}
+          {isPending && (
+            <ActivityIndicator size="large" color={colors.indigo[500]} />
+          )}
+          {jobs.length === 0 && !isPending && !isError && (
+            <Text className="text-lg text-gray-500">No jobs found</Text>
+          )}
+        </View>
+      )}
 
       {!isPending && jobs.length > 0 && (
         <FlatList

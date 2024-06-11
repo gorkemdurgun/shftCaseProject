@@ -26,12 +26,10 @@ const JobCard = ({
           Salary: <Text className="text-black">{job.salary}$</Text>
         </Text>
       </View>
-      {isApplied ? (
+      {isApplied && (
         <View className="flex-1 flex items-end mb-8">
           <Icon name="check-circle" size={20} color={colors.green[500]} />
         </View>
-      ) : (
-        <Text>a</Text>
       )}
     </TouchableOpacity>
   );

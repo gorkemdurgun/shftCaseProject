@@ -36,3 +36,19 @@ type GetJobsResponse = {
 type GetJobsByIdRequest = {
   id: string;
 };
+
+type ApplyJobRequest = {
+  id: string;
+};
+
+type ApplyJobResponse = {
+  message: string;
+};
+
+type WithdrawJobRequest = {
+  id: string;
+};
+
+type WithdrawJobResponse = {
+  message: string;
+};
