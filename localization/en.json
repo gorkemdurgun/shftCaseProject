@@ -1,0 +1,20 @@
+{
+  "language": "en",
+  "name": "English",
+  "screen": {
+    "jobListings": {
+      "title": "Job Listings",
+      "searchPlaceholder": "Search for jobs",
+      "searchByPicker": "Search by",
+      "orderByPicker": "Order by",
+      "sortByPicker": "Sort by"
+    },
+    "appliedJobs": {
+      "title": "Applied Jobs"
+    },
+    "profile": {
+      "title": "Profile",
+      "tab1": "Tab 1"
+    }
+  }
+}

@@ -8,6 +8,7 @@ import {
 } from '@react-navigation/bottom-tabs';
 
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import {I18nextProvider, useTranslation} from 'react-i18next';
 
 import LoginScreen from './screens/Login';
 import RegisterScreen from './screens/Register';
@@ -27,6 +28,8 @@ import useAppDispatch from './hooks/useAppDispatch';
 import {clearUser} from './redux/slices/userSlice';
 import BottomTabBar from './components/BottomTabBar';
 import {Stack, Tab, useAppNavigation} from './hooks/useAppNavigation';
+import i18n from './localization/i18n';
+import {TranslatedText} from './components';
 
 if (__DEV__) {
   require('./ReactotronConfig');
@@ -46,6 +49,14 @@ function MainTabNavigator() {
         name="JobListings"
         component={JobListingsScreen}
         options={{
+          headerTitle(props) {
+            return (
+              <TranslatedText
+                className="text-lg font-semibold"
+                text="screen.jobListings.title"
+              />
+            );
+          },
           headerLeft(props) {
             return (
               <TouchableOpacity
@@ -65,6 +76,14 @@ function MainTabNavigator() {
         name="AppliedJobs"
         component={AppliedJobsScreen}
         options={{
+          headerTitle(props) {
+            return (
+              <TranslatedText
+                className="text-lg font-semibold"
+                text="screen.appliedJobs.title"
+              />
+            );
+          },
           headerLeft(props) {
             return (
               <TouchableOpacity
@@ -82,6 +101,14 @@ function MainTabNavigator() {
         name="Profile"
         component={ProfileScreen}
         options={{
+          headerTitle(props) {
+            return (
+              <TranslatedText
+                className="text-lg font-semibold"
+                text="screen.profile.title"
+              />
+            );
+          },
           headerLeft(props) {
             return (
               <TouchableOpacity
@@ -160,7 +187,9 @@ export default function App() {
     <ReduxProvider store={store}>
       <PersistGate persistor={persistor} loading={null}>
         <QueryClientProvider client={queryClient}>
-          <AppNavigator />
+          <I18nextProvider i18n={i18n}>
+            <AppNavigator />
+          </I18nextProvider>
         </QueryClientProvider>
       </PersistGate>
     </ReduxProvider>

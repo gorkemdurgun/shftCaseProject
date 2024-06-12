@@ -14,8 +14,11 @@ import {useMutation} from '@tanstack/react-query';
 import {userServices} from '../services/user';
 import useAppSelector from '../hooks/useAppSelector';
 import {setUserInformations} from '../redux/slices/userSlice';
+import {useTranslation} from 'react-i18next';
+import {TranslatedText} from '../components';
 
 const ProfileScreen = ({navigation}: any) => {
+  const {t} = useTranslation();
   const dispatch = useAppDispatch();
   const {userInformations} = useAppSelector(state => state.user);
 
@@ -95,7 +98,7 @@ const ProfileScreen = ({navigation}: any) => {
     <View className="flex-1 items-start p-4 pb-0 bg-gray-300">
       <View className="w-full flex flex-col items-start gap-y-2">
         <Text className="text-lg font-bold text-center">
-          Personal Informations
+          <TranslatedText text="screen.profile.title" />
         </Text>
         <View className="w-full flex flex-col gap-y-2">
           <InputItem

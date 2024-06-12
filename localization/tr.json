@@ -1,0 +1,17 @@
+{
+  "language": "tr",
+  "name": "Türkçe",
+  "screen": {
+    "home": {
+      "title": "Ana Sayfa",
+      "subtitle": "Hoşgeldiniz"
+    },
+    "settings": {
+      "title": "Ayarlar",
+      "subtitle": "Uygulama Ayarları"
+    },
+    "profile": {
+      "title": "Profil"
+    }
+  }
+}
