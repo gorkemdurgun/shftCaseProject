@@ -2,6 +2,7 @@ import {Text, TouchableOpacity} from 'react-native';
 import {View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import colors from 'tailwindcss/colors';
+import TranslatedText from './TranslatedText';
 
 const JobCard = ({
   job,
@@ -20,10 +21,12 @@ const JobCard = ({
       <View className="ml-4">
         <Text className="text-md font-semibold">{job.name}</Text>
         <Text className="text-sm text-indigo-400">
-          Company: <Text className="text-black">{job.companyName}</Text>
+          <TranslatedText text="jobCard.company" />:{' '}
+          <Text className="text-black">{job.companyName}</Text>
         </Text>
         <Text className="text-sm text-indigo-400">
-          Salary: <Text className="text-black">{job.salary}$</Text>
+          <TranslatedText text="jobCard.salary" />:{' '}
+          <Text className="text-black">{job.salary}$</Text>
         </Text>
       </View>
       {isApplied && (

@@ -21,6 +21,7 @@ import {
   addToAppliedJobs,
   removeFromAppliedJobs,
 } from '../redux/slices/userSlice';
+import {TranslatedText} from '../components';
 
 const JobDetailScreen = ({
   route,
@@ -124,19 +125,24 @@ const JobDetailScreen = ({
           {selectedJob?.name}
         </Text>
         <Text className="font-bold text-md">
-          Company:{' '}
+          <TranslatedText text="screen.jobDetail.company" />:{' '}
           <Text className="font-bold font-normal">
             {selectedJob?.companyName}
           </Text>
         </Text>
         <Text className="font-bold text-md">
-          Location: <Text className="font-normal">{selectedJob?.location}</Text>
+          <TranslatedText text="screen.jobDetail.location" />:{' '}
+          <Text className="font-normal">{selectedJob?.location}</Text>
         </Text>
         <Text className="font-bold text-md">
-          Salary: <Text className="font-normal">{selectedJob?.salary}</Text>
+          <TranslatedText text="screen.jobDetail.salary" />:{' '}
+          <Text className="font-normal">{selectedJob?.salary}</Text>
         </Text>
         <View className="flex flex-col items-center gap-y-2">
-          <Text className="font-bold text-md"> Keywords: </Text>
+          <TranslatedText
+            className="font-bold text-md"
+            text="screen.jobDetail.keywords"
+          />
           <View className="flex flex-row flex-wrap justify-center gap-2">
             {selectedJob?.keywords.map((keyword, index) => (
               <View key={index} className="border p-1 rounded-md">
@@ -146,7 +152,10 @@ const JobDetailScreen = ({
           </View>
         </View>
         <View className="flex flex-col items-center gap-y-2">
-          <Text className="font-bold text-md"> Description: </Text>
+          <TranslatedText
+            className="font-bold text-md"
+            text="screen.jobDetail.description"
+          />
           <View className="border p-1 rounded-md bg-white">
             <Text className="text-md">{selectedJob?.description}</Text>
           </View>
@@ -159,7 +168,10 @@ const JobDetailScreen = ({
             {isWithdrawJobPending ? (
               <ActivityIndicator size="small" color="white" />
             ) : (
-              <Text className="text-white">Withdraw</Text>
+              <TranslatedText
+                className="text-white"
+                text="screen.jobDetail.withdraw"
+              />
             )}
           </TouchableOpacity>
         ) : (
@@ -170,7 +182,10 @@ const JobDetailScreen = ({
             {isApplyJobPending ? (
               <ActivityIndicator size="small" color="white" />
             ) : (
-              <Text className="text-white">Apply</Text>
+              <TranslatedText
+                className="text-white"
+                text="screen.jobDetail.apply"
+              />
             )}
           </TouchableOpacity>
         )}

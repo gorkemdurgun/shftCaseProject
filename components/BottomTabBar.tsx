@@ -1,6 +1,7 @@
 import {View, TouchableOpacity, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import colors from 'tailwindcss/colors';
+import TranslatedText from './TranslatedText';
 
 const routes: {
   route: string;
@@ -9,17 +10,17 @@ const routes: {
 }[] = [
   {
     route: 'JobListings',
-    title: 'Job Listings',
+    title: 'screen.jobListings.title',
     icon: 'list',
   },
   {
     route: 'AppliedJobs',
-    title: 'Applied Jobs',
+    title: 'screen.appliedJobs.title',
     icon: 'list-check',
   },
   {
     route: 'Profile',
-    title: 'Profile',
+    title: 'screen.profile.title',
     icon: 'user',
   },
 ];
@@ -78,10 +79,10 @@ function BottomTabBar({state, descriptors, navigation}: any) {
               color={isFocused ? colors.white : colors.indigo[300]}
             />
             <Text
-              style={{
-                color: isFocused ? colors.white : colors.indigo[300],
-              }}>
-              {routes[index]?.title}
+              className={`text-xs ${
+                isFocused ? 'text-white' : 'text-indigo-300'
+              }`}>
+              <TranslatedText text={routes[index]?.title} />
             </Text>
           </TouchableOpacity>
         );

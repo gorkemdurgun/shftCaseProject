@@ -2,16 +2,63 @@
   "language": "tr",
   "name": "Türkçe",
   "screen": {
-    "home": {
-      "title": "Ana Sayfa",
-      "subtitle": "Hoşgeldiniz"
+    "jobListings": {
+      "title": "İş İlanları"
     },
-    "settings": {
-      "title": "Ayarlar",
-      "subtitle": "Uygulama Ayarları"
+    "appliedJobs": {
+      "title": "Başvurulan İşler"
     },
     "profile": {
-      "title": "Profil"
+      "title": "Profil",
+      "tab1": "Sekme 1",
+      "labels": {
+        "name": "Ad",
+        "surname": "Soyad",
+        "email": "E-posta",
+        "phone": "Telefon",
+        "address": "Adres",
+        "city": "Şehir",
+        "state": "Eyalet",
+        "zip": "Posta Kodu",
+        "country": "Ülke"
+      },
+      "save": "Kaydet"
+    },
+    "jobDetail": {
+      "title": "İş Detayı",
+      "company": "Şirket",
+      "location": "Konum",
+      "salary": "Maaş",
+      "keywords": "Anahtar Kelimeler",
+      "description": "Açıklama",
+      "apply": "Başvur",
+      "withdraw": "Çekil"
     }
+  },
+  "input": {
+    "searchInput": {
+      "placeholder": "Ara..."
+    },
+    "searchByPicker": {
+      "placeholder": "Arama Tipi",
+      "name": "Ad",
+      "companyName": "Şirket Adı",
+      "location": "Konum",
+      "salary": "Maaş"
+    },
+    "orderByPicker": {
+      "placeholder": "Sırala...",
+      "createdAt": "Oluşturulma Tarihi",
+      "salary": "Maaş"
+    },
+    "sortByPicker": {
+      "placeholder": "Sırala...",
+      "asc": "Artan",
+      "desc": "Azalan"
+    }
+  },
+  "jobCard": {
+    "company": "Şirket",
+    "salary": "Maaş"
   }
 }

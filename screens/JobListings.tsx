@@ -20,8 +20,10 @@ import useAppSelector from '../hooks/useAppSelector';
 import JobCard from '../components/JobCard';
 import RNPickerSelect from 'react-native-picker-select';
 import Snackbar from 'react-native-snackbar';
+import {useTranslation} from 'react-i18next';
 
 const JobListingsScreen = ({navigation}: {navigation: any}) => {
+  const {t} = useTranslation();
   const orderRef = React.useRef<RNPickerSelect>(null);
   const orderDirectionRef = React.useRef<RNPickerSelect>(null);
 
@@ -119,13 +121,16 @@ const JobListingsScreen = ({navigation}: {navigation: any}) => {
         <TextInput
           keyboardType={searchField === 'salary' ? 'numeric' : 'default'}
           className="w-full ml-2"
-          placeholder="Search for jobs..."
+          placeholder={t('input.searchInput.placeholder')}
           value={searchQuery}
           onChangeText={setSearchQuery}
         />
         <View className="flex flex-row ml-auto mr-2">
           <RNPickerSelect
-            placeholder={{label: 'Search by...', value: undefined}}
+            placeholder={{
+              label: t('input.searchByPicker.placeholder'),
+              value: undefined,
+            }}
             value={searchField}
             onValueChange={setSearchField}
             style={{
@@ -140,10 +145,16 @@ const JobListingsScreen = ({navigation}: {navigation: any}) => {
               },
             }}
             items={[
-              {label: 'Name', value: 'name'},
-              {label: 'Company Name', value: 'companyName'},
-              {label: 'Location', value: 'location'},
-              {label: 'Salary', value: 'salary'},
+              {
+                label: t('input.searchByPicker.name'),
+                value: 'name',
+              },
+              {
+                label: t('input.searchByPicker.companyName'),
+                value: 'companyName',
+              },
+              {label: t('input.searchByPicker.location'), value: 'location'},
+              {label: t('input.searchByPicker.salary'), value: 'salary'},
             ]}
           />
         </View>
@@ -162,7 +173,10 @@ const JobListingsScreen = ({navigation}: {navigation: any}) => {
           <RNPickerSelect
             ref={orderRef}
             value={orderByField}
-            placeholder={{label: 'Ordered by...', value: undefined}}
+            placeholder={{
+              label: t('input.orderByPicker.placeholder'),
+              value: undefined,
+            }}
             onValueChange={setOrderByField}
             style={{
               placeholder: {
@@ -173,8 +187,8 @@ const JobListingsScreen = ({navigation}: {navigation: any}) => {
               },
             }}
             items={[
-              {label: 'Created At', value: 'createdAt'},
-              {label: 'Salary', value: 'salary'},
+              {label: t('input.orderByPicker.createdAt'), value: 'createdAt'},
+              {label: t('input.orderByPicker.salary'), value: 'salary'},
             ]}
           />
         </TouchableOpacity>
@@ -191,7 +205,10 @@ const JobListingsScreen = ({navigation}: {navigation: any}) => {
           <RNPickerSelect
             ref={orderDirectionRef}
             value={orderByDirection}
-            placeholder={{label: 'Sorted by...', value: undefined}}
+            placeholder={{
+              label: t('input.sortByPicker.placeholder'),
+              value: undefined,
+            }}
             onValueChange={setOrderByDirection}
             style={{
               placeholder: {
@@ -202,8 +219,8 @@ const JobListingsScreen = ({navigation}: {navigation: any}) => {
               },
             }}
             items={[
-              {label: 'Ascending', value: 'asc'},
-              {label: 'Descending', value: 'desc'},
+              {label: t('input.sortByPicker.asc'), value: 'asc'},
+              {label: t('input.sortByPicker.desc'), value: 'desc'},
             ]}
           />
         </TouchableOpacity>

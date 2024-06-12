@@ -52,13 +52,11 @@ const ProfileScreen = ({navigation}: any) => {
 
   const InputItem = useCallback(
     ({
-      label,
       name,
       defaultValue,
       rules,
       error,
     }: {
-      label: string;
       name: string;
       defaultValue?: string;
       rules?: RegisterOptions;
@@ -66,7 +64,10 @@ const ProfileScreen = ({navigation}: any) => {
     }) => {
       return (
         <View className="flex flex-col mb-3">
-          <Text className="text-sm mb-1">{label}</Text>
+          <TranslatedText
+            className="text-sm mb-1"
+            text={`screen.profile.labels.${name}`}
+          />
           <Controller
             control={control}
             render={({field: {onChange, onBlur, value}}) => (
@@ -102,21 +103,18 @@ const ProfileScreen = ({navigation}: any) => {
         </Text>
         <View className="w-full flex flex-col gap-y-2">
           <InputItem
-            label="Name"
             name="name"
             defaultValue={userInformations?.name}
             rules={{required: 'Name is required'}}
             error={errors.name}
           />
           <InputItem
-            label="Surname"
             name="surname"
             defaultValue={userInformations?.surname}
             rules={{required: 'Surname is required'}}
             error={errors.surname}
           />
           <InputItem
-            label="Email"
             name="email"
             defaultValue={userInformations?.email}
             rules={{required: 'Email is required'}}
@@ -127,7 +125,10 @@ const ProfileScreen = ({navigation}: any) => {
       <TouchableOpacity
         onPress={handleSubmit(onSubmit)}
         className="w-full bg-blue-500 p-2 mt-4">
-        <Text className="text-lg font-bold text-center text-white">Save</Text>
+        <TranslatedText
+          className="text-lg font-bold text-center text-white"
+          text="screen.profile.save"
+        />
       </TouchableOpacity>
     </View>
   );

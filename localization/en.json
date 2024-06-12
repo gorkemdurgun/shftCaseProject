@@ -3,18 +3,62 @@
   "name": "English",
   "screen": {
     "jobListings": {
-      "title": "Job Listings",
-      "searchPlaceholder": "Search for jobs",
-      "searchByPicker": "Search by",
-      "orderByPicker": "Order by",
-      "sortByPicker": "Sort by"
+      "title": "Job Listings"
     },
     "appliedJobs": {
       "title": "Applied Jobs"
     },
     "profile": {
       "title": "Profile",
-      "tab1": "Tab 1"
+      "tab1": "Tab 1",
+      "labels": {
+        "name": "Name",
+        "surname": "Surname",
+        "email": "Email",
+        "phone": "Phone",
+        "address": "Address",
+        "city": "City",
+        "state": "State",
+        "zip": "Zip",
+        "country": "Country"
+      },
+      "save": "Save"
+    },
+    "jobDetail": {
+      "title": "Job Detail",
+      "company": "Company",
+      "location": "Location",
+      "salary": "Salary",
+      "keywords": "Keywords",
+      "description": "Description",
+      "apply": "Apply",
+      "withdraw": "Withdraw"
     }
+  },
+  "input": {
+    "searchInput": {
+      "placeholder": "Search..."
+    },
+    "searchByPicker": {
+      "placeholder": "Search by",
+      "name": "Name",
+      "companyName": "Company Name",
+      "location": "Location",
+      "salary": "Salary"
+    },
+    "orderByPicker": {
+      "placeholder": "Order by...",
+      "createdAt": "Created At",
+      "salary": "Salary"
+    },
+    "sortByPicker": {
+      "placeholder": "Sort by...",
+      "asc": "Ascending",
+      "desc": "Descending"
+    }
+  },
+  "jobCard": {
+    "company": "Company",
+    "salary": "Salary"
   }
 }
