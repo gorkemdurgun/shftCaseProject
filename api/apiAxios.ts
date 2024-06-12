@@ -43,6 +43,7 @@ apiAxios.interceptors.response.use(
                 refreshToken: response.refreshToken,
               }),
             );
+            return apiAxios.request(error.config);
           })
           .catch(() => {
             store.dispatch(clearUser());

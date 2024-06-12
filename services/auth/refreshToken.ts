@@ -6,7 +6,7 @@ export const refreshToken = async (
 ): Promise<RefreshTokenResponse> => {
   try {
     const {data} = await apiAxios.post<RefreshTokenResponse>(
-      '/refesh',
+      '/refresh',
       credentials,
     );
     return data;

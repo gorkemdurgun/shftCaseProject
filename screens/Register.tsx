@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {authServices} from '../services/auth';
 import {useMutation} from '@tanstack/react-query';
-import {setUser} from '../redux/slices/userSlice';
+import {setLoggedUser} from '../redux/slices/userSlice';
 import colors from 'tailwindcss/colors';
 import Snackbar from 'react-native-snackbar';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -30,9 +30,10 @@ const RegisterScreen: React.FC = ({navigation}: any) => {
     mutationFn: authServices.register,
     onSuccess: data => {
       dispatch(
-        setUser({
+        setLoggedUser({
           loggedUser: data.user,
           accessToken: data.accessToken,
+          refreshToken: data.refreshToken,
         }),
       );
     },

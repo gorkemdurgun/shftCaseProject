@@ -18,16 +18,34 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser: (
+    setLoggedUser: (
       state,
-      action: PayloadAction<{loggedUser: LoggedUser; accessToken: string}>,
+      action: PayloadAction<{
+        loggedUser: LoggedUser;
+        accessToken: string;
+        refreshToken: string;
+      }>,
     ) => {
       state.loggedUser = action.payload.loggedUser;
       state.accessToken = action.payload.accessToken;
+      state.refreshToken = action.payload.refreshToken;
+    },
+    clearLoggedUser: state => {
+      state.loggedUser = null;
+      state.accessToken = null;
+      state.refreshToken = null;
+    },
+    setUserInformations: (state, action: PayloadAction<User>) => {
+      state.userInformations = action.payload;
+    },
+    clearUserInformations: state => {
+      state.userInformations = null;
     },
     clearUser: state => {
       state.loggedUser = null;
+      state.userInformations = null;
       state.accessToken = null;
+      state.refreshToken = null;
     },
     refreshTokens: (
       state,
@@ -52,7 +70,10 @@ const userSlice = createSlice({
 });
 
 export const {
-  setUser,
+  setLoggedUser,
+  clearLoggedUser,
+  setUserInformations,
+  clearUserInformations,
   clearUser,
   refreshTokens,
   addToAppliedJobs,

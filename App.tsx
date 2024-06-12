@@ -134,11 +134,12 @@ function MainTabNavigator() {
 export default function App() {
   function AppNavigator() {
     const dispatch = useAppDispatch();
-    const accessToken = useAppSelector(state => state.user.accessToken);
+    const {accessToken, refreshToken} = useAppSelector(state => state.user);
 
     useEffect(() => {
       console.log('active accessToken', accessToken);
-    }, [accessToken]);
+      console.log('active refreshToken', refreshToken);
+    }, [accessToken, refreshToken]);
 
     return (
       <NavigationContainer>

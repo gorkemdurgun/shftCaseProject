@@ -32,3 +32,5 @@ type RefreshTokenResponse = {
   accessToken: string;
   refreshToken: string;
 };
+
+type GetUserResponse = User;

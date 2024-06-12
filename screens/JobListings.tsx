@@ -30,8 +30,8 @@ const JobListingsScreen = ({navigation}: {navigation: any}) => {
   );
 
   const [searchQuery, setSearchQuery] = React.useState('');
-  const [searchField, setSearchField] = React.useState<SearchField | null>(
-    null,
+  const [searchField, setSearchField] = React.useState<SearchField | undefined>(
+    undefined,
   );
   const [orderByField, setOrderByField] = React.useState<
     OrderByField | undefined
@@ -64,21 +64,7 @@ const JobListingsScreen = ({navigation}: {navigation: any}) => {
     },
   });
 
-  useEffect(() => {
-    if (searchQuery && !searchField) {
-      setSearchField('name');
-    }
-  }, [searchField, searchQuery]);
-
-  useEffect(() => {
-    if (!orderByField && orderByDirection) {
-      setOrderByField('createdAt');
-    } else if (orderByField && !orderByDirection) {
-      setOrderByDirection('asc');
-    }
-  }, [orderByField, orderByDirection]);
-
-  useEffect(() => {
+  function getJobs() {
     if (searchField && searchQuery) {
       getAllJobsMutation({
         page: jobListMeta.page,
@@ -96,6 +82,24 @@ const JobListingsScreen = ({navigation}: {navigation: any}) => {
         orderByDirection,
       });
     }
+  }
+
+  useEffect(() => {
+    if (searchQuery && !searchField) {
+      setSearchField('name');
+    }
+  }, [searchField, searchQuery]);
+
+  useEffect(() => {
+    if (!orderByField && orderByDirection) {
+      setOrderByField('createdAt');
+    } else if (orderByField && !orderByDirection) {
+      setOrderByDirection('asc');
+    }
+  }, [orderByField, orderByDirection]);
+
+  useEffect(() => {
+    getJobs();
   }, [
     getAllJobsMutation,
     jobListMeta.page,
@@ -121,7 +125,7 @@ const JobListingsScreen = ({navigation}: {navigation: any}) => {
         />
         <View className="flex flex-row ml-auto mr-2">
           <RNPickerSelect
-            placeholder={{label: 'Search by...', value: null}}
+            placeholder={{label: 'Search by...', value: undefined}}
             value={searchField}
             onValueChange={setSearchField}
             style={{
@@ -230,6 +234,9 @@ const JobListingsScreen = ({navigation}: {navigation: any}) => {
           showsVerticalScrollIndicator={false}
           data={jobs}
           keyExtractor={item => item.id}
+          refreshControl={
+            <RefreshControl refreshing={isPending} onRefresh={getJobs} />
+          }
           ListFooterComponent={() => {
             return (
               <View className="flex flex-row flex-wrap items-center justify-center gap-x-2 py-2">

@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {authServices} from '../services/auth';
 import {useMutation} from '@tanstack/react-query';
-import {setUser} from '../redux/slices/userSlice';
+import {setLoggedUser} from '../redux/slices/userSlice';
 import colors from 'tailwindcss/colors';
 import Snackbar from 'react-native-snackbar';
 import useAppDispatch from '../hooks/useAppDispatch';
@@ -29,11 +29,11 @@ const LoginScreen: React.FC = ({navigation}: any) => {
   } = useMutation({
     mutationFn: authServices.login,
     onSuccess: data => {
-      // console.log(data.accessToken);
       dispatch(
-        setUser({
+        setLoggedUser({
           loggedUser: data.user,
           accessToken: data.accessToken,
+          refreshToken: data.refreshToken,
         }),
       );
     },

@@ -11,7 +11,7 @@ type Address = {
   country: string;
 };
 
-type ExperinceItem = {
+type ExperienceItem = {
   company: string;
   position: string;
   startDate: string;
@@ -38,7 +38,7 @@ type User = LoggedUser & {
   dateOfBirth: string;
   address: Address;
   skills?: string[];
-  experiences?: ExperinceItem[];
+  experiences?: ExperienceItem[];
   education?: EducationItem[];
   languages?: LanguageItem[];
 };

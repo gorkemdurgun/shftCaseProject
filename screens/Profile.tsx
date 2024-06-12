@@ -1,12 +1,23 @@
-import React from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
-import {clearUser} from '../redux/slices/userSlice';
 import {TextInput} from 'react-native';
 import useAppDispatch from '../hooks/useAppDispatch';
-import {useForm, Controller} from 'react-hook-form';
+import {
+  useForm,
+  Controller,
+  FieldError,
+  Merge,
+  FieldErrorsImpl,
+  RegisterOptions,
+} from 'react-hook-form';
+import {useMutation} from '@tanstack/react-query';
+import {userServices} from '../services/user';
+import useAppSelector from '../hooks/useAppSelector';
+import {setUserInformations} from '../redux/slices/userSlice';
 
 const ProfileScreen = ({navigation}: any) => {
   const dispatch = useAppDispatch();
+  const {userInformations} = useAppSelector(state => state.user);
 
   const {
     control,
@@ -18,6 +29,68 @@ const ProfileScreen = ({navigation}: any) => {
     console.log(data);
   }
 
+  const {
+    mutate: getUserMutation,
+    isPending,
+    isError,
+  } = useMutation({
+    mutationFn: userServices.getUser,
+    onSuccess: data => {
+      dispatch(setUserInformations(data));
+    },
+    onError: error => {
+      console.log('user error', error);
+    },
+  });
+
+  useEffect(() => {
+    getUserMutation();
+  }, [getUserMutation]);
+
+  const InputItem = useCallback(
+    ({
+      label,
+      name,
+      defaultValue,
+      rules,
+      error,
+    }: {
+      label: string;
+      name: string;
+      defaultValue?: string;
+      rules?: RegisterOptions;
+      error?: FieldError | Merge<FieldError, FieldErrorsImpl<any>>;
+    }) => {
+      return (
+        <View className="flex flex-col mb-3">
+          <Text className="text-sm mb-1">{label}</Text>
+          <Controller
+            control={control}
+            render={({field: {onChange, onBlur, value}}) => (
+              <TextInput
+                className={`p-2 border border-gray-400 rounded-md ${
+                  error ? 'border-red-500' : ''
+                }`}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                defaultValue={defaultValue}
+              />
+            )}
+            name={name}
+            rules={rules}
+          />
+          {error && (
+            <Text className="text-red-500 text-sm mt-1">
+              {error.message as string}
+            </Text>
+          )}
+        </View>
+      );
+    },
+    [control],
+  );
+
   return (
     <View className="flex-1 items-start p-4 pb-0 bg-gray-300">
       <View className="w-full flex flex-col items-start gap-y-2">
@@ -25,29 +98,27 @@ const ProfileScreen = ({navigation}: any) => {
           Personal Informations
         </Text>
         <View className="w-full flex flex-col gap-y-2">
-          <View className="flex flex-col">
-            <Text className="text-sm mb-1">Name</Text>
-            <Controller
-              control={control}
-              render={({field: {onChange, onBlur, value}}) => (
-                <TextInput
-                  className={`p-2 border border-gray-400 rounded-md ${
-                    errors.Name ? 'border-red-500' : ''
-                  }`}
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                />
-              )}
-              name="Name"
-              rules={{required: 'Name is required'}}
-            />
-            {errors.Name && (
-              <Text className="text-red-500 text-sm mt-1">
-                {errors.Name.message as string}
-              </Text>
-            )}
-          </View>
+          <InputItem
+            label="Name"
+            name="name"
+            defaultValue={userInformations?.name}
+            rules={{required: 'Name is required'}}
+            error={errors.name}
+          />
+          <InputItem
+            label="Surname"
+            name="surname"
+            defaultValue={userInformations?.surname}
+            rules={{required: 'Surname is required'}}
+            error={errors.surname}
+          />
+          <InputItem
+            label="Email"
+            name="email"
+            defaultValue={userInformations?.email}
+            rules={{required: 'Email is required'}}
+            error={errors.email}
+          />
         </View>
       </View>
       <TouchableOpacity
