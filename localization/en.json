@@ -10,16 +10,17 @@
     },
     "profile": {
       "title": "Profile",
-      "tab1": "Tab 1",
+      "personanlInfo": "Personal Informations",
+      "address": "Address",
       "labels": {
         "name": "Name",
         "surname": "Surname",
-        "email": "Email",
+        "profileImage": "Profile Image",
         "phone": "Phone",
+        "dateOfBirth": "Date of Birth",
         "address": "Address",
+        "details": "Detailed Address",
         "city": "City",
-        "state": "State",
-        "zip": "Zip",
         "country": "Country"
       },
       "save": "Save"

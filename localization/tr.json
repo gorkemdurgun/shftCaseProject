@@ -10,16 +10,17 @@
     },
     "profile": {
       "title": "Profil",
-      "tab1": "Sekme 1",
+      "personalInfo": "Kişisel Bilgiler",
+      "address": "Adres",
       "labels": {
         "name": "Ad",
         "surname": "Soyad",
-        "email": "E-posta",
-        "phone": "Telefon",
+        "profileImage": "Profil Resmi",
+        "phone": "Telefon Numarası",
+        "dateOfBirth": "Doğum Tarihi",
         "address": "Adres",
+        "details": "Açık Adres",
         "city": "Şehir",
-        "state": "Eyalet",
-        "zip": "Posta Kodu",
         "country": "Ülke"
       },
       "save": "Kaydet"
