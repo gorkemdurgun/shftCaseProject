@@ -8,6 +8,20 @@
     "appliedJobs": {
       "title": "Applied Jobs"
     },
+    "login": {
+      "welcome": "Welcome,",
+      "email": "Email",
+      "password": "Password",
+      "login": "Log In",
+      "noAccount": "Don't have an account?",
+      "register": "Sign Up"
+    },
+    "register": {
+      "title": "Create Account",
+      "email": "Email",
+      "password": "Password",
+      "signup": "Sign Up"
+    },
     "profile": {
       "title": "Profile",
       "personanlInfo": "Personal Informations",
@@ -15,6 +29,7 @@
       "labels": {
         "name": "Name",
         "surname": "Surname",
+        "email": "Email",
         "profileImage": "Profile Image",
         "phone": "Phone",
         "dateOfBirth": "Date of Birth",
@@ -57,6 +72,11 @@
       "asc": "Ascending",
       "desc": "Descending"
     }
+  },
+  "snackbar": {
+    "appliedSuccess": "You have successfully applied to the job.",
+    "withdrawnSuccess": "You have successfully withdrawn your application.",
+    "userUpdated": "User information has been updated successfully."
   },
   "jobCard": {
     "company": "Company",

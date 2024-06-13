@@ -26,6 +26,7 @@ import {TranslatedText} from '../components';
 import Snackbar from 'react-native-snackbar';
 
 const ProfileScreen = ({navigation}: any) => {
+  const {t} = useTranslation();
   const dispatch = useAppDispatch();
   const {userInformations} = useAppSelector(state => state.user);
 
@@ -63,7 +64,7 @@ const ProfileScreen = ({navigation}: any) => {
     mutationFn: userServices.updateUser,
     onSuccess: data => {
       Snackbar.show({
-        text: 'User updated successfully',
+        text: t('snackbar.userUpdated'),
         duration: Snackbar.LENGTH_SHORT,
       });
     },

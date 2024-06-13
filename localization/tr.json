@@ -8,6 +8,20 @@
     "appliedJobs": {
       "title": "Başvurulan İşler"
     },
+    "login": {
+      "welcome": "Hoşgeldin,",
+      "email": "E-Posta",
+      "password": "Şifre",
+      "login": "Giriş Yap",
+      "noAccount": "Hesabın yok mu?",
+      "register": "Kayıt Ol"
+    },
+    "register": {
+      "title": "Hesap Oluştur",
+      "email": "E-Posta",
+      "password": "Şifre",
+      "signup": "Kayıt Ol"
+    },
     "profile": {
       "title": "Profil",
       "personalInfo": "Kişisel Bilgiler",
@@ -15,6 +29,7 @@
       "labels": {
         "name": "Ad",
         "surname": "Soyad",
+        "email": "E-Posta",
         "profileImage": "Profil Resmi",
         "phone": "Telefon Numarası",
         "dateOfBirth": "Doğum Tarihi",
@@ -33,7 +48,7 @@
       "keywords": "Anahtar Kelimeler",
       "description": "Açıklama",
       "apply": "Başvur",
-      "withdraw": "Çekil"
+      "withdraw": "Geri Al"
     }
   },
   "input": {
@@ -57,6 +72,11 @@
       "asc": "Artan",
       "desc": "Azalan"
     }
+  },
+  "snackbar": {
+    "appliedSuccess": "Başvurunuz başarıyla alındı.",
+    "withdrawnSuccess": "Başvurunuz geri çekildi.",
+    "userUpdated": "Kullanıcı bilgileriniz güncellendi."
   },
   "jobCard": {
     "company": "Şirket",

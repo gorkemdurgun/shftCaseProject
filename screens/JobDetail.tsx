@@ -22,6 +22,7 @@ import {
   removeFromAppliedJobs,
 } from '../redux/slices/userSlice';
 import {TranslatedText} from '../components';
+import {useTranslation} from 'react-i18next';
 
 const JobDetailScreen = ({
   route,
@@ -30,6 +31,7 @@ const JobDetailScreen = ({
   route: JobDetailScreenRouteProp;
   navigation: JobDetailScreenNavigationProp;
 }) => {
+  const {t} = useTranslation();
   const dispatch = useAppDispatch();
   const userAppliedJobs = useAppSelector(
     state => state.user.loggedUser?.appliedJobs,
@@ -56,7 +58,7 @@ const JobDetailScreen = ({
     onSuccess: () => {
       dispatch(addToAppliedJobs({jobId: selectedJob?.id}));
       Snackbar.show({
-        text: 'Applied successfully',
+        text: t('snackbar.appliedSuccess'),
         duration: Snackbar.LENGTH_SHORT,
       });
     },
@@ -71,7 +73,7 @@ const JobDetailScreen = ({
       onSuccess: () => {
         dispatch(removeFromAppliedJobs({jobId: selectedJob?.id}));
         Snackbar.show({
-          text: 'Withdrawn successfully',
+          text: t('snackbar.withdrawSuccess'),
           duration: Snackbar.LENGTH_SHORT,
         });
       },

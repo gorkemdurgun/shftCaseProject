@@ -13,6 +13,7 @@ import colors from 'tailwindcss/colors';
 import Snackbar from 'react-native-snackbar';
 import Icon from 'react-native-vector-icons/AntDesign';
 import useAppDispatch from '../hooks/useAppDispatch';
+import {TranslatedText} from '../components';
 
 const RegisterScreen: React.FC = ({navigation}: any) => {
   const dispatch = useAppDispatch();
@@ -56,11 +57,17 @@ const RegisterScreen: React.FC = ({navigation}: any) => {
         <Icon name="arrowleft" size={20} color={colors.indigo[900]} />
       </TouchableOpacity>
       {/* Title */}
-      <Text className="text-2xl text-black font-bold mb-4">Create Account</Text>
+      <TranslatedText
+        className="text-2xl text-black font-bold mb-4"
+        text="screen.register.title"
+      />
       {/* Register Form */}
       <View className="w-full flex justify-center items-center mb-12">
         <View className="w-full flex justify-start items-start gap-y-1 mb-4">
-          <Text className="text-black font-semibold">Email</Text>
+          <TranslatedText
+            className="text-black font-semibold"
+            text="screen.register.email"
+          />
           <TextInput
             keyboardType="email-address"
             className="w-full border p-2 rounded-md"
@@ -73,7 +80,10 @@ const RegisterScreen: React.FC = ({navigation}: any) => {
           />
         </View>
         <View className="w-full flex justify-start items-start gap-y-1 mb-4">
-          <Text className="text-black font-semibold">Password</Text>
+          <TranslatedText
+            className="text-black font-semibold"
+            text="screen.register.password"
+          />
           <TextInput
             keyboardType="visible-password"
             className="w-full border p-2 rounded-md"
@@ -101,7 +111,10 @@ const RegisterScreen: React.FC = ({navigation}: any) => {
               animating={true}
             />
           ) : (
-            <Text className="text-lg text-indigo-700">Sign Up</Text>
+            <TranslatedText
+              className="text-lg text-indigo-700"
+              text="screen.register.signup"
+            />
           )}
         </TouchableOpacity>
       </View>
