@@ -1,0 +1,64 @@
+appId: null
+---
+- tapOn:
+    id: "shftCaseProject"
+- tapOn: "Email"
+- inputText: "test@test.com"
+- tapOn: "Password"
+- inputText: "passwordError"
+- "hideKeyboard"
+- tapOn: "Login"
+- tapOn: "Password"
+- "eraseText"
+- inputText: "password"
+- tapOn: "Login"
+- "hideKeyboard"
+- tapOn: " Ara..."
+- inputText: "Hu"
+- tapOn:
+    id: "ios_touchable_wrapper"
+- tapOn:
+    point: "50%,93%"
+- tapOn: "Done"
+- tapOn: ""
+- tapOn:
+    point: "50%,96%"
+- tapOn: "Done"
+- tapOn:
+    point: "73%,22%"
+- tapOn:
+    point: "50%,96%"
+- tapOn: "Done"
+- tapOn:
+    point: "50%,30%"
+- tapOn: "Başvur"
+- tapOn:
+    point: "6%,9%"
+- tapOn: " Başvurulan İşler"
+- tapOn:
+    point: "50%,19%"
+- tapOn: "Çekil"
+- tapOn:
+    point: "6%,9%"
+- tapOn: " Profil"
+- tapOn:
+    point: "50%,31%"
+- "eraseText"
+- "hideKeyboard"
+- tapOn: "Kaydet"
+- tapOn:
+    point: "50%,29%"
+- inputText: "deneme"
+- "hideKeyboard"
+- tapOn: "Kaydet"
+- tapOn:
+    point: "6%,9%"
+- tapOn:
+    point: "6%,9%"
+- tapOn: "Register"
+- tapOn: "Email"
+- "eraseText"
+- inputText: "gorkem@test.com"
+- "hideKeyboard"
+- tapOn: "Sign Up"
+- tapOn: " Profil"

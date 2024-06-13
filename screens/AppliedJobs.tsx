@@ -38,11 +38,12 @@ const AppliedJobsScreen = ({navigation}: {navigation: any}) => {
       setUserAppliedJobs(data);
     },
     onError: error => {
-      console.log('applied jobs error', error);
-      Snackbar.show({
-        text: error.message,
-        duration: Snackbar.LENGTH_SHORT,
-      });
+      if (error.message) {
+        Snackbar.show({
+          text: error.message,
+          duration: Snackbar.LENGTH_SHORT,
+        });
+      }
     },
   });
 

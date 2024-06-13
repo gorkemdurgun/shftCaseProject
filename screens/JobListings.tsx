@@ -161,6 +161,7 @@ const JobListingsScreen = ({navigation}: {navigation: any}) => {
       </View>
       <View className="w-full flex flex-row items-center mt-2">
         <TouchableOpacity
+          id="orderFieldButton"
           style={{backgroundColor: colors.indigo[100]}}
           className="flex-1 flex-row items-center mr-1 p-2 bg-indigo-100 rounded-lg "
           onPress={() => orderRef?.current?.togglePicker(true)}>
@@ -193,6 +194,7 @@ const JobListingsScreen = ({navigation}: {navigation: any}) => {
           />
         </TouchableOpacity>
         <TouchableOpacity
+          id="orderDirectionButton"
           style={{backgroundColor: colors.indigo[100]}}
           className="flex-1 flex-row items-center ml-1 p-2 rounded-lg "
           onPress={() => orderDirectionRef?.current?.togglePicker(true)}>

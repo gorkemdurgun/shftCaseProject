@@ -25,7 +25,7 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import colors from 'tailwindcss/colors';
 import useAppSelector from './hooks/useAppSelector';
 import useAppDispatch from './hooks/useAppDispatch';
-import {clearUser} from './redux/slices/userSlice';
+import {purge} from './redux/slices/userSlice';
 import BottomTabBar from './components/BottomTabBar';
 import {Stack, Tab, useAppNavigation} from './hooks/useAppNavigation';
 import i18n from './localization/i18n';
@@ -61,7 +61,7 @@ function MainTabNavigator() {
             return (
               <TouchableOpacity
                 className="ml-4"
-                onPress={() => dispatch(clearUser())}>
+                onPress={() => dispatch(purge())}>
                 <Icon
                   name="right-from-bracket"
                   size={16}
@@ -126,7 +126,7 @@ function MainTabNavigator() {
             return (
               <TouchableOpacity
                 className="mr-4"
-                onPress={() => dispatch(clearUser())}>
+                onPress={() => dispatch(purge())}>
                 <Icon name="right-from-bracket" size={16} />
               </TouchableOpacity>
             );
@@ -144,9 +144,7 @@ function MainTabNavigator() {
               <TouchableOpacity
                 className="ml-4"
                 onPress={() =>
-                  navigation.navigate('Main', {
-                    screen: 'JobListings',
-                  })
+                  navigation.navigate('Main', {screen: 'JobListings'})
                 }>
                 <Icon name="arrow-left" size={16} />
               </TouchableOpacity>
@@ -161,11 +159,13 @@ function MainTabNavigator() {
 export default function App() {
   function AppNavigator() {
     const dispatch = useAppDispatch();
-    const {accessToken, refreshToken} = useAppSelector(state => state.user);
+    const {loggedUser, userInformations, accessToken, refreshToken} =
+      useAppSelector(state => state.user);
 
     useEffect(() => {
-      console.log('active accessToken', accessToken);
-      console.log('active refreshToken', refreshToken);
+      console.log('active values', accessToken, refreshToken);
+      console.log('user', loggedUser);
+      console.log('user info', userInformations);
     }, [accessToken, refreshToken]);
 
     return (

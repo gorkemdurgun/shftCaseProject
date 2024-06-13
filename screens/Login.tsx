@@ -17,8 +17,8 @@ const LoginScreen: React.FC = ({navigation}: any) => {
   const dispatch = useAppDispatch();
 
   const [loginForm, setLoginForm] = React.useState<LoginRequest>({
-    email: '123@test.com',
-    password: 'password123',
+    email: '',
+    password: '',
   });
   // const [loading, setLoading] = React.useState<boolean>(false);
 
@@ -59,6 +59,7 @@ const LoginScreen: React.FC = ({navigation}: any) => {
         <View className="w-full flex justify-start items-start gap-y-1 mb-4">
           <Text className="text-black font-semibold">Email</Text>
           <TextInput
+            autoCapitalize="none"
             keyboardType="email-address"
             className="w-full border p-2 rounded-md"
             style={{borderColor: isError ? 'red' : colors.indigo[900]}}
@@ -70,6 +71,7 @@ const LoginScreen: React.FC = ({navigation}: any) => {
         <View className="w-full flex justify-start items-start gap-y-1 mb-4">
           <Text className="text-black font-semibold">Password</Text>
           <TextInput
+            autoCapitalize="none"
             keyboardType="visible-password"
             className="w-full border p-2 rounded-md"
             style={{borderColor: isError ? 'red' : colors.indigo[900]}}
@@ -79,6 +81,7 @@ const LoginScreen: React.FC = ({navigation}: any) => {
           />
         </View>
         <TouchableOpacity
+          id="login-button"
           disabled={isPending}
           className="w-full flex justify-center items-center p-2 shadow-md rounded-md"
           style={{

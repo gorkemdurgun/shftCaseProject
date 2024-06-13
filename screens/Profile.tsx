@@ -85,11 +85,13 @@ const ProfileScreen = ({navigation}: any) => {
 
   const InputItem = useCallback(
     ({
+      readonly,
       name,
       defaultValue,
       rules,
       error,
     }: {
+      readonly?: boolean;
       name: string;
       defaultValue?: string;
       rules?: RegisterOptions;
@@ -105,8 +107,9 @@ const ProfileScreen = ({navigation}: any) => {
             control={control}
             render={({field: {onChange, onBlur, value}}) => (
               <TextInput
+                readOnly={readonly}
                 className={`p-2 border border-gray-400 rounded-md ${
-                  error ? 'border-red-500' : ''
+                  error ? 'border-red-500' : readonly ? 'opacity-50' : ''
                 }`}
                 onBlur={onBlur}
                 onChangeText={onChange}
@@ -146,6 +149,13 @@ const ProfileScreen = ({navigation}: any) => {
             defaultValue={userInformations?.surname}
             rules={{required: 'Surname is required'}}
             error={errors.surname}
+          />
+          <InputItem
+            readonly
+            name="email"
+            defaultValue={userInformations?.email}
+            rules={{required: 'Email is required'}}
+            error={errors.email}
           />
           <InputItem
             name="profileImage"

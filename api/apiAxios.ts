@@ -1,6 +1,6 @@
 import axios from 'axios';
 import store from '../redux/store';
-import {clearUser, refreshTokens} from '../redux/slices/userSlice';
+import {purge, refreshTokens} from '../redux/slices/userSlice';
 import Snackbar from 'react-native-snackbar';
 import {authServices} from '../services/auth';
 
@@ -46,7 +46,7 @@ apiAxios.interceptors.response.use(
             return apiAxios.request(error.config);
           })
           .catch(() => {
-            store.dispatch(clearUser());
+            store.dispatch(purge());
           });
       }
     }
